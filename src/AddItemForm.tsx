@@ -1,8 +1,10 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button, Icon, IconButton, TextField} from "@mui/material";
+import {IconButton, TextField} from "@mui/material";
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-export type AddItemProps={
-    addItem:(title:string)=>void
+import {v1} from "uuid";
+
+export type AddItemProps = {
+    addItem: (title: string, todolistID:string) => void
 }
 export const AddItemForm = (props: AddItemProps) => {
     let [title, setTitle] = useState("")
@@ -11,7 +13,7 @@ export const AddItemForm = (props: AddItemProps) => {
     const addItem = () => {
         let newTitle = title.trim();
         if (newTitle !== "") {
-            props.addItem(newTitle);
+            props.addItem(newTitle, v1());
             setTitle("");
         } else {
             setError("Title is required");
@@ -24,19 +26,19 @@ export const AddItemForm = (props: AddItemProps) => {
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
-        if (e.charCode === 13) {
+        if (e.key === 'Enter') {
             addItem();
         }
     }
     return (
         <div>
             <TextField type='text' size='small' value={title}
-                       onKeyPress={onKeyPressHandler}
-                   onChange={onChangeHandler} error={!!error}
+                       onKeyDown={onKeyPressHandler}
+                       onChange={onChangeHandler} error={!!error}
                        label='Type value' helperText={error}
             />
-            <IconButton color='primary' onClick={addItem}><AddCircleRoundedIcon />
-               </IconButton>
+            <IconButton color='primary' onClick={addItem}><AddCircleRoundedIcon/>
+            </IconButton>
         </div>
     )
 };
