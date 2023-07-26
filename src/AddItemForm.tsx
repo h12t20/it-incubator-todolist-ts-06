@@ -6,7 +6,8 @@ import {v1} from "uuid";
 export type AddItemProps = {
     addItem: (title: string, todolistID:string) => void
 }
-export const AddItemForm = (props: AddItemProps) => {
+export const AddItemForm = React.memo((props: AddItemProps) => {
+    console.log('AddItemForm')
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -25,7 +26,7 @@ export const AddItemForm = (props: AddItemProps) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if (error) setError(null);
         if (e.key === 'Enter') {
             addItem();
         }
@@ -41,4 +42,4 @@ export const AddItemForm = (props: AddItemProps) => {
             </IconButton>
         </div>
     )
-};
+});
