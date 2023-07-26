@@ -23,7 +23,6 @@ type PropsType = {
     filter: FilterValuesType
 }
 export const Todolist = React.memo((props: PropsType) => {
-    console.log('Todolist')
     const tasks = useSelector<AppRootStateType,
         TaskType[]>(state => state.tasks[props.id]);
     const dispatch = useDispatch();

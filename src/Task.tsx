@@ -14,14 +14,14 @@ export type TaskPropsType = {
 export const Task = React.memo((props: TaskPropsType) => {
 
     const dispatch = useDispatch();
-    const onClickHandler = () => dispatch(removeTaskAC(props.task.id, props.id));
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onClickHandler = useCallback(() => dispatch(removeTaskAC(props.task.id, props.id)),[props.id]);
+    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
         dispatch(changeTaskStatusAC(props.task.id, newIsDoneValue, props.id))
-    }
+    },[props.id])
     const onChangeTitle = useCallback((newValue: string) => {
         dispatch(changeTaskTitleAC(props.task.id, newValue, props.id))
-    }, [])
+    }, [props.id])
 
     return <div key={props.task.id} className={props.task.isDone ? "is-done" : ""}>
         <Checkbox onChange={onChangeHandler} checked={props.task.isDone}/>

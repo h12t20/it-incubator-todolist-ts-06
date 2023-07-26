@@ -7,7 +7,6 @@ export type AddItemProps = {
     addItem: (title: string, todolistID:string) => void
 }
 export const AddItemForm = React.memo((props: AddItemProps) => {
-    console.log('AddItemForm')
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 

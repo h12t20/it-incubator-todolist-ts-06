@@ -28,7 +28,6 @@ export type TasksStateType = {
 }
 
 function App() {
-    console.log('App')
     const todolists=useSelector<AppRootStateType,
         Array<TodolistType>>(state=>state.todolists);
     const dispatch=useDispatch()
