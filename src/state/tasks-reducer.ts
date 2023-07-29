@@ -1,7 +1,7 @@
 import {TasksStateType} from "../App";
 import {TaskType} from "../Todolist";
 import {v1} from "uuid";
-import {AddTodoActionType, todolistId1, todolistId2} from "./todolists-reducer";
+import {AddTodoActionType} from "./todolists-reducer";
 
 export type RemoveTasksActionType = ReturnType<typeof removeTaskAC>
 export type AddTasksActionType = ReturnType<typeof addTaskAC>
@@ -10,7 +10,7 @@ export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>
 export type RemoveTodolistActionType = ReturnType<typeof RemoveTodolistAC>
 
 const initialState:TasksStateType= {
-    [todolistId1]: [
+    ['todolistId1']: [
         {
             id: v1(),
             title: "HTML&CSS",
@@ -22,7 +22,7 @@ const initialState:TasksStateType= {
             isDone: true
         }
     ],
-    [todolistId2]: [
+    ['todolistId2']: [
         {
             id: v1(),
             title: "Milk",
