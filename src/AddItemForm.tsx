@@ -1,10 +1,9 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {IconButton, TextField} from "@mui/material";
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import {v1} from "uuid";
 
 export type AddItemProps = {
-    addItem: (title: string, todolistID:string) => void
+    addItem: (title: string) => void
 }
 export const AddItemForm = React.memo((props: AddItemProps) => {
     let [title, setTitle] = useState("")
@@ -13,7 +12,7 @@ export const AddItemForm = React.memo((props: AddItemProps) => {
     const addItem = () => {
         let newTitle = title.trim();
         if (newTitle !== "") {
-            props.addItem(newTitle, v1());
+            props.addItem(newTitle);
             setTitle("");
         } else {
             setError("Title is required");
