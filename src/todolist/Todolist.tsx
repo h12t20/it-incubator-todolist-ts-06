@@ -1,12 +1,12 @@
 import React from 'react';
-import {FilterValuesType} from './App';
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {FilterValuesType} from '../App';
+import {AddItemForm} from "../AddItemForm";
+import {EditableSpan} from "../EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {Task} from "./Task";
-import {useTodolist} from "./todolist/useTodolist";
+import {Task} from "../task/Task";
+import {useTodolist} from "./useTodolist";
 
 export type TaskType = {
     id: string
