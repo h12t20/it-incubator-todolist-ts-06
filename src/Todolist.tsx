@@ -78,4 +78,3 @@ export const Todolist = React.memo((props: PropsType) => {
         </div>
     </div>
 })
-

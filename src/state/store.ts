@@ -6,7 +6,8 @@ const rootReducer = combineReducers({
     tasks:tasksReducer,
     todolists:todoListsReducer})
 export const store = configureStore({
-    reducer: rootReducer
+    reducer: rootReducer,
+    devTools: true
 });
 export type StateType={
     todolists:TodolistType[],

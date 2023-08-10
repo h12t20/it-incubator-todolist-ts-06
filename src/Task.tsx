@@ -12,7 +12,7 @@ export type TaskPropsType = {
     id: string
 }
 export const Task = React.memo((props: TaskPropsType) => {
-
+console.log('task')
     const dispatch = useDispatch();
     const onClickHandler = useCallback(() => dispatch(removeTaskAC(props.task.id, props.id)),[props.id]);
     const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
