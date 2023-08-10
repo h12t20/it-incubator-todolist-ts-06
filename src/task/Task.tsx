@@ -1,6 +1,6 @@
 import React from "react";
 import Checkbox from "@mui/material/Checkbox";
-import {EditableSpan} from "../EditableSpan";
+import {EditableSpan} from "../editablespan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {TaskType} from "../todolist/Todolist";

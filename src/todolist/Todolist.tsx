@@ -1,19 +1,18 @@
 import React from 'react';
-import {FilterValuesType} from '../App';
-import {AddItemForm} from "../AddItemForm";
-import {EditableSpan} from "../EditableSpan";
+import {AddItemForm} from "../additemform/AddItemForm";
+import {EditableSpan} from "../editablespan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Task} from "../task/Task";
 import {useTodolist} from "./useTodolist";
+import {FilterValuesType} from "../app/App";
 
 export type TaskType = {
     id: string
     title: string
     isDone: boolean
 }
-
 type PropsType = {
     id: string
     title: string

@@ -7,7 +7,7 @@ import {
 
 } from './tasks-reducer';
 import {AddTodolistAC} from './todolists-reducer';
-import { TasksStateType } from '../App'
+import { TasksStateType } from '../app/App'
 const startState: TasksStateType = {
     'todolistId1': [
         {id: '1', title: 'CSS', isDone: false},

@@ -1,7 +1,7 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import './App.css';
-import {TaskType, Todolist} from './todolist/Todolist';
-import {AddItemForm} from "./AddItemForm";
+import {TaskType, Todolist} from '../todolist/Todolist';
+import {AddItemForm} from "../additemform/AddItemForm";
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -12,9 +12,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import AppBar from '@mui/material/AppBar';
-import {AppRootStateType} from "./state/store";
-import {useDispatch, useSelector} from "react-redux";
-import {AddTodolistAC} from "./state/todolists-reducer";
+import {useApp} from "./useApp";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -28,13 +26,11 @@ export type TasksStateType = {
 }
 
 function App() {
-    const todolists=useSelector<AppRootStateType,
-        Array<TodolistType>>(state=>state.todolists);
-    const dispatch=useDispatch()
+    const {
+        todolists,
+        addTodolist,
+    } = useApp();
 
-    const addTodolist = useCallback((title: string) => {
-        dispatch(AddTodolistAC(title))
-    },[dispatch]);
     return (
         <div className="App">
             <div className='AppBar'>

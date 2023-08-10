@@ -1,9 +1,9 @@
 import {useCallback} from 'react';
-import {FilterValuesType} from '../App';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
 import {ChangeTodoFilterAC, ChangeTodoTitleAC, RemoveTodolistAC} from "../state/todolists-reducer";
 import {addTaskAC} from "../state/tasks-reducer";
+import {FilterValuesType} from "../app/App";
 
 export type TaskType = {
     id: string
