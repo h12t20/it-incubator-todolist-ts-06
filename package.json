@@ -24,6 +24,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/uuid": "^8.3.4",
+    "axios": "^1.4.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "react-intersection-observer": "^9.5.2",
@@ -39,10 +40,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 9009",
     "build-storybook": "storybook build",
     "jest:integration": "jest -c integration/jest.config.js",
-    "test:integration": "start-server-and-test storybook http-get://localhost:6006 jest:integration"
+    "test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration"
   },
   "browserslist": {
     "production": [

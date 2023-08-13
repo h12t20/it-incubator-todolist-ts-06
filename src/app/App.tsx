@@ -12,9 +12,8 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import AppBar from '@mui/material/AppBar';
-import {useApp} from "./useApp";
+import {FilterValuesType, useApp} from "./useApp";
 
-export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
     id: string
     title: string
