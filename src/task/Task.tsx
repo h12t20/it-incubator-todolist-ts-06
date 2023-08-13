@@ -3,8 +3,8 @@ import Checkbox from "@mui/material/Checkbox";
 import {EditableSpan} from "../editablespan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {TaskType} from "../todolist/Todolist";
 import {useTask} from "./useTask";
+import {TaskStatuses, TaskType} from "../api/todolist-api";
 
 export type TaskPropsType = {
     task:TaskType
@@ -15,10 +15,10 @@ export const Task = React.memo((props: TaskPropsType) => {
         onChangeHandler,
         onChangeTitle,
         onClickHandler
-    } = useTask(props.task.id, props.task.title, props.task.isDone, props.id)
+    } = useTask(props.task.id, props.task.title, props.task.status, props.id)
 
-    return <div key={props.task.id} className={props.task.isDone ? "is-done" : ""}>
-        <Checkbox id={props.task.id} onChange={onChangeHandler} checked={props.task.isDone}/>
+    return <div key={props.task.id} className={props.task.status===TaskStatuses.Completed ? "is-done" : ""}>
+        <Checkbox id={props.task.id} onChange={onChangeHandler} checked={props.task.status===TaskStatuses.Completed}/>
         <EditableSpan onChangeTitle={onChangeTitle} value={props.task.title}/>
         <IconButton onClick={onClickHandler}>
             <DeleteIcon/>

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {TaskType, Todolist} from '../todolist/Todolist';
+import {Todolist} from '../todolist/Todolist';
 import {AddItemForm} from "../additemform/AddItemForm";
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,12 +12,19 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import AppBar from '@mui/material/AppBar';
-import {FilterValuesType, useApp} from "./useApp";
-
-export type TodolistType = {
-    id: string
+import {useApp} from "./useApp";
+import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
+type TaskType = {
+    description: string
     title: string
-    filter: FilterValuesType
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
 }
 
 export type TasksStateType = {

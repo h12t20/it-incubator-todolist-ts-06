@@ -1,16 +1,9 @@
 import {useCallback} from 'react';
 import './App.css';
-import {TaskType} from '../todolist/Todolist';
 import {AppRootStateType} from "../state/store";
 import {useDispatch, useSelector} from "react-redux";
-import {AddTodolistAC} from "../state/todolists-reducer";
-
-export type FilterValuesType = "all" | "active" | "completed";
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
+import {AddTodolistAC, TodolistDomainType} from "../state/todolists-reducer";
+import {TaskType} from "../api/todolist-api";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -18,7 +11,7 @@ export type TasksStateType = {
 
 export const useApp=()=> {
     const todolists=useSelector<AppRootStateType,
-        Array<TodolistType>>(state=>state.todolists);
+        Array<TodolistDomainType>>(state=>state.todolists);
     const dispatch=useDispatch()
 
     const addTodolist = useCallback((title: string) => {
@@ -29,5 +22,4 @@ export const useApp=()=> {
         addTodolist,
     }
 }
-
 

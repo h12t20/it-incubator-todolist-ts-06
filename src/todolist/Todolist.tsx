@@ -6,13 +6,9 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Task} from "../task/Task";
 import {useTodolist} from "./useTodolist";
-import {FilterValuesType} from "../app/App";
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+import {FilterValuesType} from "../state/todolists-reducer";
+
 type PropsType = {
     id: string
     title: string

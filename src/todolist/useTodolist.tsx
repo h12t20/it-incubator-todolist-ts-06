@@ -1,15 +1,17 @@
 import {useCallback} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
-import {ChangeTodoFilterAC, ChangeTodoTitleAC, RemoveTodolistAC} from "../state/todolists-reducer";
+import {ChangeTodoFilterAC, ChangeTodoTitleAC, FilterValuesType, RemoveTodolistAC} from "../state/todolists-reducer";
 import {addTaskAC} from "../state/tasks-reducer";
-import {FilterValuesType} from "../app/App";
+import {TaskStatuses, TaskType} from "../api/todolist-api";
+/*
 
 export type TaskType = {
     id: string
     title: string
     isDone: boolean
 }
+*/
 
 export const useTodolist = (id:string, filter:FilterValuesType)=>{
     const tasks = useSelector<AppRootStateType,
@@ -34,10 +36,10 @@ export const useTodolist = (id:string, filter:FilterValuesType)=>{
     }, [id])
     let tasksForTodolist = tasks;
     if (filter === "active") {
-        tasksForTodolist = tasks.filter(t => !t.isDone);
+        tasksForTodolist = tasks.filter(t => t.status===TaskStatuses.New);
     }
     if (filter === "completed") {
-        tasksForTodolist = tasks.filter(t => t.isDone);
+        tasksForTodolist = tasks.filter(t => t.status===TaskStatuses.Completed);
     }
 
     return {

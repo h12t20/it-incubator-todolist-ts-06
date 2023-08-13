@@ -1,7 +1,8 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {tasksReducer} from "./tasks-reducer";
 import {todoListsReducer} from "./todolists-reducer";
-import {TasksStateType, TodolistType} from "../app/App";
+import {TasksStateType} from "../app/App";
+import {TodolistType} from "../api/todolist-api";
 const rootReducer = combineReducers({
     tasks:tasksReducer,
     todolists:todoListsReducer})
