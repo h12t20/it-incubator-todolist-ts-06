@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Todolist} from '../todolist/Todolist';
 import {AddItemForm} from "../additemform/AddItemForm";
@@ -13,7 +13,8 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import AppBar from '@mui/material/AppBar';
 import {useApp} from "./useApp";
-import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
+import {TaskPriorities, TaskStatuses} from "../api/task-api";
+
 type TaskType = {
     description: string
     title: string
@@ -30,11 +31,12 @@ type TaskType = {
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
-
 function App() {
+    useEffect(() => setTodolist(), []);
     const {
         todolists,
         addTodolist,
+        setTodolist
     } = useApp();
 
     return (

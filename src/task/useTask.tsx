@@ -1,22 +1,29 @@
 import {ChangeEvent, useCallback} from "react";
 import {useDispatch} from "react-redux";
-import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
-import {TaskStatuses} from "../api/todolist-api";
+import {
+    changeTaskTitleTC,
+    removeTasksTC,
+    updateTaskStatusTC
+} from "../state/tasks-reducer";
 
-export const useTask = (id:string, title:string, status:TaskStatuses, todoListID:string) => {
-    const dispatch = useDispatch();
-    const onClickHandler = useCallback(() => dispatch(removeTaskAC(id, todoListID)),[id]);
-    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        let newStatusValue = e.currentTarget.checked? TaskStatuses.Completed: TaskStatuses.New;
-        dispatch(changeTaskStatusAC(id, newStatusValue, todoListID))
-    },[todoListID])
-    const onChangeTitle = useCallback((newValue: string) => {
-        dispatch(changeTaskTitleAC(id, newValue, todoListID))
+import {TaskStatuses} from "../api/task-api";
+import {AppDispatch} from "../state/store";
+
+export const useTask = (id: string, todoListID: string) => {
+    const useAppDispatch: () => AppDispatch = useDispatch;
+    const dispatch = useAppDispatch();
+    const removeTask = useCallback(() => dispatch(removeTasksTC(todoListID, id)), [id]);
+    const changeTaskStatus = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        const newStatusValue = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New;
+        dispatch(updateTaskStatusTC(id, todoListID, newStatusValue))
+    }, [todoListID])
+    const changeTaskTitle = useCallback((newValue: string) => {
+        dispatch(changeTaskTitleTC(id, todoListID, newValue))
     }, [todoListID])
 
     return {
-        onChangeHandler,
-        onChangeTitle,
-        onClickHandler
+        changeTaskStatus,
+        changeTaskTitle,
+        removeTask
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {AddItemForm} from "../additemform/AddItemForm";
 import {EditableSpan} from "../editablespan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
@@ -15,6 +15,7 @@ type PropsType = {
     filter: FilterValuesType
 }
 export const Todolist = React.memo((props: PropsType) => {
+    useEffect(() => fetchTasks(), []);
     const {
         removeTodolist,
         onAllClickHandler,
@@ -22,7 +23,8 @@ export const Todolist = React.memo((props: PropsType) => {
         onCompletedClickHandler,
         addTask,
         onChangeTodoTitle,
-        tasksForTodolist
+        tasksForTodolist,
+        fetchTasks
     } = useTodolist(props.id, props.filter)
 
     return <div>

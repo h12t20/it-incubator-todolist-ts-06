@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {todolistAPI} from "../api/todolist-api";
+import {taskAPI} from "../api/task-api";
 
 export default {
     title: 'API'
 }
 
-export const GetTodolists = () => {
+export const GetTodolist = () => {
     const [state, setState] = useState<any>(null);
     useEffect(() => {
         todolistAPI.readTodolist()
@@ -64,7 +65,7 @@ export const GetTasks = () => {
     const [state, setState] = useState<any>(null);
     const [todolistID, setTodolistID] = useState('');
     const getTask = () => {
-        todolistAPI.readTasks(todolistID)
+        taskAPI.readTasks(todolistID)
             .then(res => setState(res.data));
         setTodolistID('')
     }
@@ -79,7 +80,7 @@ export const CreateTask = () => {
     const [todolistID, setTodolistID] = useState('');
     const [title, setTitle] = useState('');
     const createTask = () => {
-        todolistAPI.createTask(todolistID, title)
+        taskAPI.createTask(todolistID, title)
             .then(res => setState(res.data));
         setTodolistID('');
         setTitle('')
@@ -98,7 +99,10 @@ export const UpdateTaskTitle = () => {
     const [taskID, setTaskID] = useState('');
     const [title, setTitle] = useState('');
     const updateTaskTitle=() => {
-        todolistAPI.updateTask(todolistID, taskID, title)
+        taskAPI.updateTask(todolistID, taskID, {
+            title: title, description:'', status:0, priority:0, startDate:'',
+            deadline:'', id:'', todoListId:'', order:0, addedDate:''
+        })
             .then(res => setState(res.data))
     }
     return <div>{JSON.stringify(state)} <br/>
@@ -116,7 +120,7 @@ export const DeleteTask = () => {
     const [todolistID, setTodolistID] = useState('');
     const [taskID, setTaskID] = useState('');
     const deleteTaskID = () => {
-        todolistAPI.deleteTask(todolistID, taskID)
+        taskAPI.deleteTask(todolistID, taskID)
             .then(res => setState(res.data));
         setTodolistID('');
         setTaskID('')
