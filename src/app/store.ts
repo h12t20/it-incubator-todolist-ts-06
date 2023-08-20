@@ -3,6 +3,7 @@ import {TaskActionType, tasksReducer} from "../features/TodoloistList/tasks-redu
 import {TodoActionType, todoListsReducer} from "../features/TodoloistList/todolists-reducer";
 import {TodolistType} from "../api/todolist-api";
 import {TaskPriorities, TaskStatuses} from "../api/task-api";
+import {useDispatch} from "react-redux";
 const rootReducer = combineReducers({
     tasks:tasksReducer,
     todolists:todoListsReducer})
@@ -25,7 +26,8 @@ type TaskType = {
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
-export type AppDispatch = typeof store.dispatch
+const useAppDispatch = () => useDispatch<typeof store.dispatch>()
+export const dispatch = useAppDispatch()
 export type ActionType = TodoActionType | TaskActionType;
 export type StateType={
     todolists:TodolistType[],

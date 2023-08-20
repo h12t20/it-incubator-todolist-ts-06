@@ -35,11 +35,8 @@ export const Todolist = React.memo((props: PropsType) => {
         </h3>
         <AddItemForm addItem={addTask}/>
         <div>
-            {
-                tasksForTodolist.map(task =>
-                    <Task key={task.id} task={task} id={props.id}/>
-                )
-            }
+            {tasksForTodolist.map(task =>
+                <Task key={task.id} task={task} id={props.id}/>)}
         </div>
         <div className='button'>
             <Button size='small' color='primary' variant={props.filter === 'all' ? 'outlined' : 'text'}

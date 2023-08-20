@@ -1,9 +1,10 @@
-import {addTaskAC, removeTaskAC, tasksReducer} from './tasks-reducer';
+import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from './tasks-reducer';
 import {addTodolistAC} from './todolists-reducer';
 import {TasksStateType} from '../../app/store';
 
-import {TaskPriorities, TaskStatuses} from "../../api/task-api";
-
+import {TaskPriorities, TaskStatuses, TaskType} from "../../api/task-api";
+const nTask={id:'5', status:2, priority:0, addedDate:'', order:0, todoListId:'todolistId2',
+    title:'juse', deadline:'', startDate:'', description:''}
 export const startState: TasksStateType = {
     'todolistId1': [
         {id: '1', title: 'CSS', status: TaskStatuses.New, description:'', addedDate:'', startDate:'',
@@ -46,21 +47,22 @@ test('correct task should be deleted from correct array', () => {
         ]
     })
 })
-/*test('correct task should be added to correct array', () => {
+test('correct task should be added to correct array', () => {
 
-    const action = addTaskAC()
-
+const newTask:TaskType={id:'5', status:0, priority:0, addedDate:'', order:0, todoListId:'todolistId2',
+    title:'juse', deadline:'', startDate:'', description:''}
+    const action = addTaskAC(newTask)
     const endState = tasksReducer(startState, action)
     expect(endState['todolistId1'].length).toBe(3)
     expect(endState['todolistId2'].length).toBe(4)
     expect(endState['todolistId2'][0].id).toBeDefined()
-    expect(endState['todolistId2'][0].title).toBe('juce')
+    expect(endState['todolistId2'][0].title).toBe('juse')
     expect(endState['todolistId2'][0].status).toBe(TaskStatuses.New)
-})*/
-/*
+})
+
 test('status of specified task should be changed', () => {
 
-    const action = changeTaskStatusAC('1', TaskStatuses.Completed, 'todolistId2')
+    const action = updateTaskAC('1', nTask, 'todolistId2')
 
     const endState = tasksReducer(startState, action)
 
@@ -71,18 +73,18 @@ test('status of specified task should be changed', () => {
     expect(endState['todolistId2'][2].status).toBe(TaskStatuses.New)
     expect(endState['todolistId2'][1].title).toBe('milk')
 })
-*/
 
-/*test('title of specified task should be changed', () => {
 
-    const action = updateTaskAC('1', 'vodka', 'todolistId2')
+test('title of specified task should be changed', () => {
+
+    const action = updateTaskAC('1', nTask, 'todolistId2')
     const endState = tasksReducer(startState, action)
     expect(endState['todolistId1'].length).toBe(3)
     expect(endState['todolistId2'].length).toBe(3)
-    expect(endState['todolistId2'][0].title).toBe('vodka')
-    expect(endState['todolistId2'][0].status).toBe(TaskStatuses.New)
+    expect(endState['todolistId2'][0].title).toBe('juse')
+    expect(endState['todolistId2'][0].status).toBe(2)
     expect(endState['todolistId2'][1].title).toBe('milk')
-})*/
+})
 test('new array should be added when new todolist is added', () => {
 
     const action = addTodolistAC({id:'new todolist',

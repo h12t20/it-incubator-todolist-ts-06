@@ -1,15 +1,12 @@
 import {useCallback} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, AppRootStateType} from "../../../app/store";
+import {useSelector} from "react-redux";
+import {AppRootStateType, dispatch} from "../../../app/store";
 import {changeTodoFilterAC, changeTodoTitleTC, deleteTodolistTC, FilterValuesType
 } from "../todolists-reducer";
 import {addTasksTC, fetchTasksTC} from "../tasks-reducer";
-
 import {TaskStatuses, TaskType} from "../../../api/task-api";
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
-    const useAppDispatch: () => AppDispatch = useDispatch;
-    const dispatch = useAppDispatch();
     const tasks = useSelector<AppRootStateType,
         TaskType[]>(state => state.tasks[id]);
     const fetchTasks = useCallback(() => {
@@ -37,7 +34,6 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
     if (filter === "completed") {
         tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.Completed);
     }
-
     return {
         removeTodolist,
         onAllClickHandler,

@@ -6,7 +6,7 @@ import {Todolist} from "./todolist/Todolist";
 import Container from "@mui/material/Container";
 import React, {useEffect} from "react";
 
-export const TodolistList = () => {
+export const TodolistList = React.memo(() => {
     useEffect(() => setTodolist(), []);
     const {todolists, addTodolist, setTodolist} = useTodolistList();
     return (
@@ -31,4 +31,4 @@ export const TodolistList = () => {
                 </Grid>
             </Container>
         </div>)
-}
+})

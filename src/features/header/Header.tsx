@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
-export const Header = () => {
+export const Header = React.memo(() => {
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
@@ -22,4 +22,4 @@ export const Header = () => {
             </AppBar>
         </Box>
     )
-}
+})

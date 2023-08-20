@@ -4,7 +4,6 @@ import {EditableSpan} from "../../../../components/editablespan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useTask} from "./useTask";
-
 import {TaskStatuses, TaskType} from "../../../../api/task-api";
 
 export type TaskPropsType = {
