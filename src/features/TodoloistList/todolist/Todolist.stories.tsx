@@ -1,5 +1,5 @@
 import React from "react";
-import {ReduxStoreProviderDecorator} from "../stories/ReduxStoreProviderDecorator";
+import {ReduxStoreProviderDecorator} from "../../../stories/ReduxStoreProviderDecorator";
 import {Todolist} from "./Todolist";
 
 

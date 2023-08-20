@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
-import {AddItemForm} from "../additemform/AddItemForm";
-import {EditableSpan} from "../editablespan/EditableSpan";
+import {AddItemForm} from "../../../components/additemform/AddItemForm";
+import {EditableSpan} from "../../../components/editablespan/EditableSpan";
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {Task} from "../task/Task";
+import {Task} from "./task/Task";
 import {useTodolist} from "./useTodolist";
 
-import {FilterValuesType} from "../state/todolists-reducer";
+import {FilterValuesType} from "../todolists-reducer";
 
 type PropsType = {
     id: string

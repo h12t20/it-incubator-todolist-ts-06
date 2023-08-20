@@ -1,11 +1,11 @@
 import {useCallback} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, AppRootStateType} from "../state/store";
-import {ChangeTodoFilterAC, changeTodoTitleTC, deleteTodolistTC, FilterValuesType
-} from "../state/todolists-reducer";
-import {addTasksTC, fetchTasksTC} from "../state/tasks-reducer";
+import {AppDispatch, AppRootStateType} from "../../../app/store";
+import {changeTodoFilterAC, changeTodoTitleTC, deleteTodolistTC, FilterValuesType
+} from "../todolists-reducer";
+import {addTasksTC, fetchTasksTC} from "../tasks-reducer";
 
-import {TaskStatuses, TaskType} from "../api/task-api";
+import {TaskStatuses, TaskType} from "../../../api/task-api";
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
     const useAppDispatch: () => AppDispatch = useDispatch;
@@ -19,11 +19,11 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
         dispatch(deleteTodolistTC(id))
     }, [id]);
     const onAllClickHandler = useCallback(() =>
-        dispatch(ChangeTodoFilterAC(id, "all")), []);
+        dispatch(changeTodoFilterAC(id, "all")), []);
     const onActiveClickHandler = useCallback(() =>
-        dispatch(ChangeTodoFilterAC(id, "active")), []);
+        dispatch(changeTodoFilterAC(id, "active")), []);
     const onCompletedClickHandler = useCallback(() =>
-        dispatch(ChangeTodoFilterAC(id, "completed")), []);
+        dispatch(changeTodoFilterAC(id, "completed")), []);
     const addTask = useCallback((title: string) => {
         dispatch(addTasksTC(id, title))
     }, [id]);

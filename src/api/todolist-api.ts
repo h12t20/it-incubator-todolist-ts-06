@@ -1,18 +1,4 @@
 import {instance} from "./instance";
-
-export type ResponseType<D={}> = {
-    resultCode: number
-    messages: Array<string>
-    fieldsErrors: Array<string>
-    data: D
-}
-export type TodolistType = {
-    id: string
-    addedDate: string
-    order: number
-    title: string
-}
-
 export const todolistAPI = {
     updateTodolist(todolistId: string, title: string) {
         return instance.put<ResponseType>(`/todo-lists/${todolistId}`, {title: title})
@@ -26,4 +12,17 @@ export const todolistAPI = {
     readTodolist() {
         return instance.get<Array<TodolistType>>('/todo-lists')
     }
+}
+//types
+export type ResponseType<D={}> = {
+    resultCode: number
+    messages: Array<string>
+    fieldsErrors: Array<string>
+    data: D
+}
+export type TodolistType = {
+    id: string
+    addedDate: string
+    order: number
+    title: string
 }
