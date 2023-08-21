@@ -1,6 +1,5 @@
-import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from './tasks-reducer';
+import {addTaskAC, removeTaskAC, tasksReducer, TasksStateType, updateTaskAC} from './tasks-reducer';
 import {addTodolistAC} from './todolists-reducer';
-import {TasksStateType} from '../../app/store';
 
 import {TaskPriorities, TaskStatuses, TaskType} from "../../api/task-api";
 const nTask={id:'5', status:2, priority:0, addedDate:'', order:0, todoListId:'todolistId2',

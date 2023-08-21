@@ -1,16 +1,14 @@
 import {useCallback} from 'react';
-import {AppDispatch, AppRootStateType} from "../../app/store";
-import {useDispatch, useSelector} from "react-redux";
-import {createTodolistTC, fetchTodolistTC, TodolistDomainType} from "./todolists-reducer";
+import {createTodolistTC, fetchTodolistTC} from "./todolists-reducer";
 import {TaskType} from "../../api/task-api";
+import {useAppDispatch, useAppSelector} from "../../app/hook";
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
 export const useTodolistList = () => {
-    const dispatch = useDispatch<AppDispatch>();
-    const todolists = useSelector<AppRootStateType,
-        Array<TodolistDomainType>>(state => state.todolists);
+    const dispatch = useAppDispatch();
+    const todolists = useAppSelector(state => state.todolists);
     const addTodolist = useCallback((title: string) => {
         dispatch(createTodolistTC(title))
     }, [dispatch]);

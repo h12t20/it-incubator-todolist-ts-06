@@ -1,15 +1,11 @@
 import {useCallback} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, AppRootStateType} from "../../../app/store";
-import {changeTodoFilterAC, changeTodoTitleTC, deleteTodolistTC, FilterValuesType
-} from "../todolists-reducer";
+import {changeTodoFilterAC, changeTodoTitleTC, deleteTodolistTC, FilterValuesType} from "../todolists-reducer";
 import {addTasksTC, fetchTasksTC} from "../tasks-reducer";
-import {TaskStatuses, TaskType} from "../../../api/task-api";
-
+import {TaskStatuses} from "../../../api/task-api";
+import {useAppDispatch, useAppSelector} from "../../../app/hook";
 export const useTodolist = (id: string, filter: FilterValuesType) => {
-    const dispatch = useDispatch<AppDispatch>();
-    const tasks = useSelector<AppRootStateType,
-        TaskType[]>(state => state.tasks[id]);
+    const dispatch = useAppDispatch();
+    const tasks = useAppSelector(state => state.tasks[id]);
     const fetchTasks = useCallback(() => {
         dispatch(fetchTasksTC(id))}, [dispatch]);
     const removeTodolist = useCallback(() => {dispatch(deleteTodolistTC(id))}, [id]);
