@@ -1,6 +1,5 @@
 import {instance} from "./instance";
 import {ResponseType} from "./todolist-api";
-
 export const taskAPI = {
     readTasks(todolistId: string) {
         return instance.get<TaskResponseType>(`/todo-lists/${todolistId}/tasks`)},

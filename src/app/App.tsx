@@ -2,8 +2,7 @@ import React from 'react';
 import './App.css';
 import {TodolistList} from "../features/TodolistList/TodolistList";
 import {Header} from "../features/header/Header";
-
-function App() {
+export const App=()=>{
     return (
         <div className="App">
             <div className='AppBar'>
@@ -13,5 +12,4 @@ function App() {
         </div>
     );
 }
-export default App;
 

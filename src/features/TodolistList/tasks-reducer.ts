@@ -1,4 +1,4 @@
-import {ActionType, AppRootStateType, AppThunk} from "../../app/store";
+import {ActionType, RootState, AppThunk} from "../../app/store";
 import {taskAPI, TaskStatuses, TaskType} from "../../api/task-api";
 
 export type TasksStateType = {
@@ -18,24 +18,18 @@ export const setTasksAC = (todolistId:string, tasks:TaskType[])=> ({type: 'SET-T
 //thunks
 export const fetchTasksTC = (todolistId:string):AppThunk => (dispatch) => {
     taskAPI.readTasks(todolistId)
-        .then((res) => {
-            dispatch(setTasksAC(todolistId, res.data.items))
-        })
+        .then((res) => {dispatch(setTasksAC(todolistId, res.data.items))})
 }
 export const removeTasksTC = (todolistId:string, taskId:string):AppThunk => (dispatch) => {
     taskAPI.deleteTask(todolistId, taskId)
-        .then(() => {
-            dispatch(removeTaskAC(taskId, todolistId))
-        })
+        .then(() => {dispatch(removeTaskAC(taskId, todolistId))})
 }
 export const addTasksTC = (todolistId:string, title:string):AppThunk => (dispatch) => {
     taskAPI.createTask(todolistId, title)
-        .then((res) => {
-            dispatch(addTaskAC(res.data.data.item))
-        })
+        .then((res) => {dispatch(addTaskAC(res.data.data.item))})
 }
 export const updateTaskTC = (taskId: string, todolistId: string, newValue:string | null, newStatus:TaskStatuses | null):
-    AppThunk=> (dispatch, getState: () => AppRootStateType) => {
+    AppThunk=> (dispatch, getState: () => RootState) => {
         const task = getState().tasks[todolistId].find(t => t.id === taskId)
         if (task) {const changedTask= {...task, title:newValue!=null? newValue: task.title,
             status: newStatus!=null? newStatus:task.status}
