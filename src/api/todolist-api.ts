@@ -1,4 +1,5 @@
 import {instance} from "./instance";
+import {TaskType} from "./task-api";
 export const todolistAPI = {
     updateTodolist(todolistId: string, title: string) {
         return instance.put<ResponseType>(`/todo-lists/${todolistId}`, {title: title})
@@ -14,7 +15,9 @@ export const todolistAPI = {
     }
 }
 //types
-export type ResponseType<D={}> = {
+export type ResponseType<D={
+    item: TaskType;
+}> = {
     resultCode: number
     messages: Array<string>
     fieldsErrors: Array<string>

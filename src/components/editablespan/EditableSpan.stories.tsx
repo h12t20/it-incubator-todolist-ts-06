@@ -8,5 +8,6 @@ export default {
 }
 
 export const AddItemFormBaseExample=()=>{
-    return <EditableSpan value='Start value' onChangeTitle={action('Title was changed')}/>
+    return <EditableSpan value='Start value' onChangeTitle={action('Title was changed')} disabled={false}
+                         entityStatus='idle'/>
 }

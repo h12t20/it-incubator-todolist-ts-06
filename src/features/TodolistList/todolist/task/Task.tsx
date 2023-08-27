@@ -9,6 +9,8 @@ import {TaskStatuses, TaskType} from "../../../../api/task-api";
 export type TaskPropsType = {
     task:TaskType
     id: string
+    disabled: boolean
+    entityStatus: string
 }
 export const Task = React.memo((props: TaskPropsType) => {
     const {
@@ -16,11 +18,12 @@ export const Task = React.memo((props: TaskPropsType) => {
         changeTaskTitle,
         removeTask
     } = useTask(props.task.id, props.id)
-
+const disabled=props.task.entityStatus==='loading'
     return <div key={props.task.id} className={props.task.status===TaskStatuses.Completed ? "is-done" : ""}>
-        <Checkbox id={props.task.id} onChange={changeTaskStatus} checked={props.task.status===TaskStatuses.Completed}/>
-        <EditableSpan onChangeTitle={changeTaskTitle} value={props.task.title}/>
-        <IconButton onClick={removeTask}>
+        <Checkbox id={props.task.id} onChange={changeTaskStatus} checked={props.task.status===TaskStatuses.Completed}
+        disabled={disabled}/>
+        <EditableSpan onChangeTitle={changeTaskTitle} value={props.task.title} disabled={disabled}/>
+        <IconButton onClick={removeTask} disabled={disabled}>
             <DeleteIcon/>
         </IconButton>
     </div>

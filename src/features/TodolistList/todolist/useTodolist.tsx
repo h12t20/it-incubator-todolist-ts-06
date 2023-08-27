@@ -1,5 +1,5 @@
 import {useCallback} from 'react';
-import {changeTodoFilterAC, changeTodoTitleTC, deleteTodolistTC, FilterValuesType} from "../todolists-reducer";
+import {changeTodoTitleTC, deleteTodolistTC, FilterValuesType} from "../todolists-reducer";
 import {addTasksTC, fetchTasksTC} from "../tasks-reducer";
 import {TaskStatuses} from "../../../api/task-api";
 import {useAppDispatch, useAppSelector} from "../../../app/hook";
@@ -9,10 +9,6 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
     const fetchTasks = useCallback(() => {
         dispatch(fetchTasksTC(id))}, [dispatch]);
     const removeTodolist = useCallback(() => {dispatch(deleteTodolistTC(id))}, [id]);
-    const onAllClickHandler = useCallback(() => dispatch(changeTodoFilterAC(id, "all")), []);
-    const onActiveClickHandler = useCallback(() => dispatch(changeTodoFilterAC(id, "active")), []);
-    const onCompletedClickHandler = useCallback(() =>
-        dispatch(changeTodoFilterAC(id, "completed")), []);
     const addTask = useCallback((title: string) => {dispatch(addTasksTC(id, title))}, [id]);
     const onChangeTodoTitle = useCallback((newValue: string) => {
         dispatch(changeTodoTitleTC(id, newValue))}, [id])
@@ -25,9 +21,6 @@ export const useTodolist = (id: string, filter: FilterValuesType) => {
     }
     return {
         removeTodolist,
-        onAllClickHandler,
-        onActiveClickHandler,
-        onCompletedClickHandler,
         addTask,
         onChangeTodoTitle,
         tasksForTodolist,

@@ -1,5 +1,6 @@
 import {instance} from "./instance";
 import {ResponseType} from "./todolist-api";
+import {RequestStatusType} from "../app/app-reducer";
 export const taskAPI = {
     readTasks(todolistId: string) {
         return instance.get<TaskResponseType>(`/todo-lists/${todolistId}/tasks`)},
@@ -24,6 +25,7 @@ export type TaskType = {
     todoListId: string
     order: number
     addedDate: string
+    entityStatus?: RequestStatusType
 }
 export enum TaskStatuses {
     New,

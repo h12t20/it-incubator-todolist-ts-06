@@ -11,7 +11,7 @@ export default {
 
 export const TodolistBaseExample=()=>{
     return <>
-        <Todolist id='todolistId1' title='What to learn' filter='all'/>
-        <Todolist id='todolistId2' title='What to buy' filter='all'/>
+        <Todolist id='todolistId1' title='What to learn' filter='all' entityStatus='idle'/>
+        <Todolist id='todolistId2' title='What to buy' filter='all' entityStatus='idle'/>
     </>
 }

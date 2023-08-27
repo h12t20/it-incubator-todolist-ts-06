@@ -4,7 +4,8 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import {useAddItemForm} from "./useAddItemForm";
 
 export type AddItemProps = {
-    addItem: (title: string) => void
+    addItem: (title: string) => void,
+    disabled?:boolean
 }
 export const AddItemForm = React.memo((props: AddItemProps) => {
     const {
@@ -21,8 +22,9 @@ export const AddItemForm = React.memo((props: AddItemProps) => {
                        onKeyDown={onKeyPressHandler}
                        onChange={onChangeHandler} error={!!error}
                        label='Type value' helperText={error}
+                       disabled={props.disabled}
             />
-            <IconButton color='primary' onClick={addItem}><AddCircleRoundedIcon/>
+            <IconButton color='primary' onClick={addItem} disabled={props.disabled}><AddCircleRoundedIcon/>
             </IconButton>
         </div>
     )

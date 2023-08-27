@@ -24,6 +24,7 @@ export const TodolistList = React.memo(() => {
                                     id={tl.id}
                                     title={tl.title}
                                     filter={tl.filter}
+                                    entityStatus={tl.entityStatus}
                                 />
                             </Paper>
                         </Grid>
