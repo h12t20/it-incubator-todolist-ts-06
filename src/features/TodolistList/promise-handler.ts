@@ -5,13 +5,12 @@ import {AppActionType, setAppErrorAC, setAppStatusAC} from "../../app/app-reduce
 import {changeTodolistEntityStatusAC} from "./todolists-reducer";
 import {addTaskAC, changeTaskEntityStatusAC} from "./tasks-reducer";
 import {Dispatch} from "@reduxjs/toolkit";
-
-
-export const promiseHandler = (promise: Promise<AxiosResponse<ResponseType, ResponseType>>,
+export const promiseHandler = <R>(promise: Promise<AxiosResponse<ResponseType < R >, ResponseType>>,
                                action: ActionType | null, todolistId: string | null, taskID: string | null): AppThunk =>
     (dispatch) => {
         promise.then((res) => {
             if (res.data.resultCode === 0) {
+                // @ts-ignore
                 action ? dispatch(action) : dispatch(addTaskAC(res.data.data.item))
                 dispatch(setAppStatusAC('succeeded'))
                 todolistId && !taskID ? dispatch(changeTodolistEntityStatusAC(todolistId, 'succeeded')) : undefined

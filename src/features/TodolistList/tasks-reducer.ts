@@ -24,7 +24,6 @@ export const changeTaskEntityStatusAC = (todolistId: string, id: string, status:
 
 //thunks
 export const fetchTasksTC = (todolistId: string): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC('loading'))
     taskAPI.readTasks(todolistId)
         .then((res) => {
             dispatch(setTasksAC(todolistId, res.data.items))
@@ -100,6 +99,8 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return  {...state,
             [action.todolistId]: state[action.todolistId].map(t => t.id === action.id ?
             {...t, entityStatus: action.status} : t)}
+        case 'CLEAR-DATA':
+            return initialState;
         default:
             return state
     }

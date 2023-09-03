@@ -3,7 +3,8 @@ import {appReducer} from "./app-reducer";
 test('setErrorTest', () => {
     expect(appReducer({
             status: 'idle',
-            error: null
+            error: null,
+            isInitialized: true
         },
         {
             type: 'APP/SET-ERROR',
@@ -11,13 +12,15 @@ test('setErrorTest', () => {
         }))
         .toStrictEqual({
             status: 'idle',
-            error: 'some error'
+            error: 'some error',
+            isInitialized: true
         })
 })
 test('setStatusTest', () => {
     expect(appReducer({
             status: 'idle',
-            error: null
+            error: null,
+        isInitialized: true
         },
         {
             type: 'APP/SET-STATUS',
@@ -25,7 +28,8 @@ test('setStatusTest', () => {
         }))
         .toStrictEqual({
             status: 'loading',
-            error: null
+            error: null,
+            isInitialized: true
         })
 })
 

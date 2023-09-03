@@ -4,11 +4,12 @@ import {AddItemForm} from "../../components/additemform/AddItemForm";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./todolist/Todolist";
 import Container from "@mui/material/Container";
-import React, {useEffect} from "react";
+import React from "react";
+import {Navigate} from "react-router-dom";
 
 export const TodolistList = React.memo(() => {
-    useEffect(() => setTodolist(), []);
-    const {todolists, addTodolist, setTodolist} = useTodolistList();
+    const {todolists, addTodolist, isLoggedIn} = useTodolistList();
+  if (!isLoggedIn) {return <Navigate to='/login'/>}
     return (
         <div>
             <Container fixed>

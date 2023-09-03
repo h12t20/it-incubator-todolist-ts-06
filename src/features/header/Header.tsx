@@ -7,11 +7,11 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import LinearProgress from "@mui/material/LinearProgress";
-import {useAppSelector} from "../../app/hook";
 import s from './Header.module.css'
+import {useHeader} from "./useHeader";
 
 export const Header = React.memo(() => {
-    const status = useAppSelector(state => state.app.status)
+    const {status, isLoggedIn, onLogOutHandler}=useHeader()
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
@@ -23,7 +23,8 @@ export const Header = React.memo(() => {
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                             Todolist
                         </Typography>
-                        <Button color="inherit">Login</Button>
+                        {isLoggedIn &&
+                            <Button color="inherit" onClick={onLogOutHandler}>Logout</Button>}
                     </Toolbar>
                 </div>
                 <div className={s.toolbar}>
