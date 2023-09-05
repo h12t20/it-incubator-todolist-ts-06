@@ -1,6 +1,7 @@
 import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {useFormik} from "formik";
 import {loginTC} from "./auth-reducer";
+
 type FormikErrorType = {
     email?: string
     password?: string
@@ -14,7 +15,7 @@ export const useLogin = () => {
             password: '',
             rememberMe: false
         },
-        validate: (values) => {
+        validate: values => {
             const errors: FormikErrorType = {}
             if (!values.email) {
                 errors.email = 'Required'
