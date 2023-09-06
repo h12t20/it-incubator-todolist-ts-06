@@ -12,7 +12,7 @@ import {useLogin} from "./useLogin";
 
 export const Login = () => {
 const {formik, isLoggedIn}=useLogin()
-    if (isLoggedIn) {return <Navigate to={'/'}/>}
+    if (isLoggedIn) return <Navigate to='/'/>
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <form onSubmit={formik.handleSubmit}>
@@ -30,19 +30,16 @@ const {formik, isLoggedIn}=useLogin()
                     <FormGroup>
                         <TextField autoComplete='on' type="email" label="Email" margin="normal"
                                    {...formik.getFieldProps('email')} onBlur={formik.handleBlur}></TextField>
-                        {formik.errors.email && formik.touched.email?
-                            <div style={{color:'red'}}>{formik.errors.email}</div>:null}
+                        {formik.errors.email && formik.touched.email &&
+                            <div style={{color: 'red'}}>{formik.errors.email}</div>}
                         <TextField autoComplete='on' type="password" label="Password" margin="normal"
                                    {...formik.getFieldProps('password')} onBlur={formik.handleBlur}></TextField>
-                        {formik.errors.password && formik.touched.password?
-                            <div style={{color:'red'}}>{formik.errors.password}</div>:null}
+                        {formik.errors.password && formik.touched.password &&
+                            <div style={{color: 'red'}}>{formik.errors.password}</div>}
                         <FormControlLabel label='Remember me' control={<Checkbox/>}
-                                          {...formik.getFieldProps('rememberMe')}
-                                          checked={formik.values.rememberMe}/>
+                                          {...formik.getFieldProps('rememberMe')} checked={formik.values.rememberMe}/>
                         <Button type={'submit'} variant={'contained'} color={'primary'}
-                                disabled={!!formik.errors.email || !!formik.errors.password}>
-                            Login
-                        </Button>
+                                disabled={!!formik.errors.email || !!formik.errors.password}>Login</Button>
                     </FormGroup>
                 </FormControl>
             </form>
