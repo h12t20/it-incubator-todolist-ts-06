@@ -22,7 +22,6 @@ export const promiseHandler = <R>(promise: Promise<AxiosResponse<ResponseType < 
             }
         })
             .catch((error) => {
-                console.log(error)
                 dispatch(setAppStatusAC({status: 'failed'}))
                 dispatch(setAppErrorAC({error: error.message}))
                 todolistId && !taskID && dispatch(changeTodolistEntityStatusAC({id: todolistId, status: 'succeeded'}))
