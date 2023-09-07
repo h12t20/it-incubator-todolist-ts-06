@@ -17,8 +17,8 @@ const slice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        removeTaskAC(state, action: PayloadAction<{ id: string, todolistId: string }>) {
-            const index = state[action.payload.todolistId].findIndex(t => t.id === action.payload.id)
+        removeTaskAC(state, action: PayloadAction<{ taskId: string, todolistId: string }>) {
+            const index = state[action.payload.todolistId].findIndex(t => t.id === action.payload.taskId)
             if (index > -1) state[action.payload.todolistId].splice(index, 1)
         },
         addTaskAC(state, action: PayloadAction<{ task: TaskType }>) {
@@ -31,8 +31,8 @@ const slice = createSlice({
         setTasksAC(state, action: PayloadAction<{ todolistId: string, tasks: TaskType[] }>) {
             state[action.payload.todolistId] = action.payload.tasks.map(t => ({...t, entityStatus: 'idle'}))
         },
-        changeTaskEntityStatusAC(state, action: PayloadAction<{ todolistId: string, id: string, status: RequestStatusType }>) {
-            const index = state[action.payload.todolistId].findIndex(t => t.id === action.payload.id)
+        changeTaskEntityStatusAC(state, action: PayloadAction<{ todolistId: string, taskId: string, status: RequestStatusType }>) {
+            const index = state[action.payload.todolistId].findIndex(t => t.id === action.payload.taskId)
             if (index > -1) state[action.payload.todolistId][index].entityStatus = action.payload.status
         }
     },
@@ -69,12 +69,12 @@ export const fetchTasksTC = (todolistId: string): AppThunk => (dispatch) => {
 }
 export const removeTasksTC = (todolistId: string, taskId: string): AppThunk => (dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))
-    dispatch(changeTaskEntityStatusAC({todolistId, id: taskId, status: 'loading'}))
-    dispatch(promiseHandler(taskAPI.deleteTask(todolistId, taskId), removeTaskAC({id: taskId, todolistId}), todolistId, taskId))
+    dispatch(changeTaskEntityStatusAC({todolistId, taskId, status: 'loading'}))
+    dispatch(promiseHandler(taskAPI.deleteTask(todolistId, taskId), removeTaskAC({taskId, todolistId}), todolistId, taskId))
 }
 export const addTasksTC = (todolistId: string, title: string): AppThunk => (dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))
-    dispatch(changeTodolistEntityStatusAC({id: todolistId, status: 'loading'}))
+    dispatch(changeTodolistEntityStatusAC({todolistId, status: 'loading'}))
     dispatch(promiseHandler(taskAPI.createTask(todolistId, title), null, todolistId, null))
 }
 export const updateTaskTC = (taskId: string, todolistId: string, newValue: string | null, newStatus: TaskStatuses | null):
@@ -87,7 +87,7 @@ export const updateTaskTC = (taskId: string, todolistId: string, newValue: strin
             status: newStatus != null ? newStatus : task.status
         }
         dispatch(setAppStatusAC({status: 'loading'}))
-        dispatch(changeTaskEntityStatusAC({todolistId, id: taskId, status: 'loading'}))
+        dispatch(changeTaskEntityStatusAC({todolistId, taskId, status: 'loading'}))
         dispatch(promiseHandler(taskAPI.updateTask(todolistId, taskId, changedTask),
             updateTaskAC({taskId, task: changedTask, todolistId}), todolistId, taskId))
     } else dispatch(setAppErrorAC({error: 'Some error occurred'}))

@@ -17,8 +17,6 @@ const slice = createSlice({
 })
 export const setIsLoggedInAC = slice.actions.setIsLoggedInAC
 export const authReducer = slice.reducer
-//types
-export type AuthActionType = ReturnType<typeof setIsLoggedInAC>
 //Thunks
 export const loginTC = (loginParams: LoginParamsType): AppThunk => (dispatch) => {
     dispatch(setAppStatusAC({status: 'loading'}))

@@ -26,7 +26,7 @@ export const startState: TasksStateType = {
 
 test('correct task should be deleted from correct array', () => {
 
-    const action = removeTaskAC({id: '2', todolistId: 'todolistId2'})
+    const action = removeTaskAC({taskId: '2', todolistId: 'todolistId2'})
 
     const endState = tasksReducer(startState, action)
 

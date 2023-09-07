@@ -7,15 +7,15 @@ import {addTaskAC, changeTaskEntityStatusAC} from "./tasks-reducer";
 import {AnyAction, Dispatch} from "@reduxjs/toolkit";
 
 export const promiseHandler = <R>(promise: Promise<AxiosResponse<ResponseType < R >, ResponseType>>,
-                                  action: AnyAction | null, todolistId: string | null, taskID: string | null): AppThunk =>
+                                  action: AnyAction | null, todolistId: string | null, taskId: string | null): AppThunk =>
     (dispatch) => {
         promise.then((res) => {
             if (res.data.resultCode === 0) {
                 // @ts-ignore
                 action ? dispatch(action) : dispatch(addTaskAC({task: res.data.data.item}))
                 dispatch(setAppStatusAC({status: 'succeeded'}))
-                todolistId && !taskID && dispatch(changeTodolistEntityStatusAC({id: todolistId, status: 'succeeded'}))
-                todolistId && taskID && dispatch(changeTaskEntityStatusAC({todolistId, id: taskID, status: 'succeeded'}))
+                todolistId && !taskId && dispatch(changeTodolistEntityStatusAC({todolistId, status: 'succeeded'}))
+                todolistId && taskId && dispatch(changeTaskEntityStatusAC({todolistId, taskId, status: 'succeeded'}))
             } else {
                 const errorMessage = res.data.messages.length ? res.data.messages[0] : 'Some error occurred'
                 throw new Error(errorMessage)
@@ -24,8 +24,8 @@ export const promiseHandler = <R>(promise: Promise<AxiosResponse<ResponseType < 
             .catch((error) => {
                 dispatch(setAppStatusAC({status: 'failed'}))
                 dispatch(setAppErrorAC({error: error.message}))
-                todolistId && !taskID && dispatch(changeTodolistEntityStatusAC({id: todolistId, status: 'succeeded'}))
-                todolistId && taskID && dispatch(changeTaskEntityStatusAC({todolistId, id: taskID, status: 'succeeded'}))
+                todolistId && !taskId && dispatch(changeTodolistEntityStatusAC({todolistId, status: 'succeeded'}))
+                todolistId && taskId && dispatch(changeTaskEntityStatusAC({todolistId, taskId, status: 'succeeded'}))
             })
     }
 export const handleServerNetworkError = (error: { message: string }, dispatch: ErrorUtilsDispatchType) => {
