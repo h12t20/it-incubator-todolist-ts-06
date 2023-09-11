@@ -78,10 +78,10 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addTodolistAC, (state, action) => {
-        return {
-          ...state,
-          [action.payload.todoList.id]: [],
-        };
+          return {
+            ...state,
+            [action.payload.todoList.id]: [],
+          };
       })
       .addCase(removeTodolistAC, (state, action) => {
         delete state[action.payload.todolistId];
@@ -102,13 +102,13 @@ export const fetchTasksTC =
     taskAPI
       .readTasks(todolistId)
       .then((res) => {
-        dispatch(
-          setTasksAC({
-            todolistId,
-            tasks: res.data.items,
-          }),
-        );
-        dispatch(setAppStatusAC({ status: "succeeded" }));
+          dispatch(
+            setTasksAC({
+              todolistId,
+              tasks: res.data.items,
+            }),
+          );
+          dispatch(setAppStatusAC({ status: "succeeded" }));
       })
       .catch((error) => {
         handleServerNetworkError(error, dispatch);
