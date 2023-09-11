@@ -24,11 +24,11 @@ export const setIsLoggedInAC = slice.actions.setIsLoggedInAC;
 export const authReducer = slice.reducer;
 //Thunks
 export const loginTC =
-    (loginParams: LoginParamsType): AppThunk =>
-        (dispatch) => {
-            dispatch(setAppStatusAC({status: "loading"}));
-            dispatch(promiseHandler(authAPI.login(loginParams), setIsLoggedInAC({value: true}), null, null));
-        };
+  (loginParams: LoginParamsType): AppThunk =>
+  (dispatch) => {
+    dispatch(setAppStatusAC({ status: "loading" }));
+    dispatch(promiseHandler(authAPI.login(loginParams), setIsLoggedInAC({ value: true }), null, null));
+  };
 export const logoutTC = (): AppThunk => (dispatch) => {
   dispatch(setAppStatusAC({ status: "loading" }));
   dispatch(
