@@ -78,6 +78,7 @@
     "jest-environment-jsdom": "^29.6.2",
     "jest-image-snapshot": "^6.2.0",
     "jest-puppeteer": "^9.0.0",
+    "prettier": "3.0.3",
     "puppeteer": "^21.0.1",
     "start-server-and-test": "^2.0.0",
     "storybook": "^7.1.1",
