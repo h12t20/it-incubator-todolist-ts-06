@@ -102,13 +102,13 @@ export const fetchTasksTC =
     taskAPI
       .readTasks(todolistId)
       .then((res) => {
-          dispatch(
-            setTasksAC({
-              todolistId,
-              tasks: res.data.items,
-            }),
-          );
-          dispatch(setAppStatusAC({ status: "succeeded" }));
+        dispatch(
+          setTasksAC({
+            todolistId,
+            tasks: res.data.items,
+          }),
+        );
+        dispatch(setAppStatusAC({ status: "succeeded" }));
       })
       .catch((error) => {
         handleServerNetworkError(error, dispatch);
