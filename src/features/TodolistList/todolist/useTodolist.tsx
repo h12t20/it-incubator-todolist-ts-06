@@ -3,7 +3,7 @@ import { changeTodoTitleTC, deleteTodolistTC, FilterValuesType } from "../todoli
 import { addTasksTC } from "../tasks-reducer";
 import { TaskStatuses } from "api/task-api";
 import { useAppDispatch, useAppSelector } from "app/hook";
-import { tasksSelectorCreator } from "features/TodolistList/todolist/todolist.selectors";
+import { tasksSelectorCreator } from "app/selectors";
 
 export const useTodolist = (id: string, filter: FilterValuesType) => {
   const dispatch = useAppDispatch();

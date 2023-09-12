@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { createTodolistTC, fetchTodolistTC } from "./todolists-reducer";
 import { useAppDispatch, useAppSelector } from "app/hook";
-import { isLoggedInSelector, todolistsSelector } from "features/TodolistList/todolistList.selectors";
+import { isLoggedInSelector, todolistsSelector } from "app/selectors";
 
 export const useTodolistList = () => {
   useEffect(() => {

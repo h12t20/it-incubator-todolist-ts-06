@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "app/hook";
 import { useFormik } from "formik";
 import { loginTC } from "./auth-reducer";
-import { isLoggedInSelector } from "features/TodolistList/todolistList.selectors";
+import { isLoggedInSelector } from "app/selectors";
 
 type FormikErrorType = {
   email?: string;
