@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import s from "app/App.module.scss";
 import { TodolistList } from "features/TodolistList/TodolistList";
 import { Header } from "features/header/Header";
 import { ErrorSnackbar } from "components/errorsnachbar/ErrorSnackbar";
@@ -12,32 +12,27 @@ export const App = () => {
   const { isInitialized } = useApp();
   if (!isInitialized) {
     return (
-      <div
-        style={{
-          position: "fixed",
-          top: "30%",
-          textAlign: "center",
-          width: "100%",
-        }}
-      >
+      <div className={s.CircularProgress}>
         <CircularProgress />
       </div>
     );
   }
   return (
-    <div className="App">
+    <div className={s.App}>
       <ErrorSnackbar />
-      <div className="AppBar">
+      <div className={s.AppBar}>
         <Header />
       </div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<TodolistList />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>} />
-          <Route path="*" element={<Navigate to="/404" />} />
-        </Routes>
-      </BrowserRouter>
+      <div className={s.Body}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<TodolistList />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/404" element={<h1>404: PAGE NOT FOUND</h1>} />
+            <Route path="*" element={<Navigate to="/404" />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </div>
   );
 };
