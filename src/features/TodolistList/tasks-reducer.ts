@@ -16,19 +16,22 @@ export type TasksStateType = {
 };
 const initialState: TasksStateType = {};
 export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async (todolistId: string, thunkAPI) => {
-  const { dispatch } = thunkAPI;
+    const { dispatch, rejectWithValue } = thunkAPI;
   try {
     dispatch(setAppStatusAC({ status: "loading" }));
     const res = await taskAPI.readTasks(todolistId);
-    dispatch(
-      setTasksAC({
-        todolistId,
-        tasks: res.data.items,
-      }),
-    );
+    const tasks = res.data.items;
+    /*dispatch(
+                setTasksAC({
+                  todolistId,
+                  tasks: res.data.items,
+                }),
+              );*/
     dispatch(setAppStatusAC({ status: "succeeded" }));
+    return { tasks, todolistId };
   } catch (error: any) {
     handleServerNetworkError(error, dispatch);
+    return rejectWithValue(null);
   }
 });
 const slice = createSlice({
@@ -67,18 +70,18 @@ const slice = createSlice({
       const index = state[action.payload.todolistId].findIndex((t) => t.id === action.payload.taskId);
       if (index > -1) state[action.payload.todolistId][index] = action.payload.task;
     },
-    setTasksAC(
-      state,
-      action: PayloadAction<{
-        todolistId: string;
-        tasks: TaskType[];
-      }>,
-    ) {
-      state[action.payload.todolistId] = action.payload.tasks.map((t) => ({
-        ...t,
-        entityStatus: "idle",
-      }));
-    },
+    /*setTasksAC(
+        state,
+        action: PayloadAction<{
+          todolistId: string;
+          tasks: TaskType[];
+        }>,
+      ) {
+        state[action.payload.todolistId] = action.payload.tasks.map((t) => ({
+          ...t,
+          entityStatus: "idle",
+        }));
+      },*/
     changeTaskEntityStatusAC(
       state,
       action: PayloadAction<{
@@ -107,10 +110,18 @@ const slice = createSlice({
           state[tl.id] = [];
         });
       })
-      .addCase(clearDataAC, () => initialState);
+      .addCase(clearDataAC, () => initialState)
+      .addCase(fetchTasks.fulfilled, (state, action) => {
+        action.payload
+          ? (state[action.payload.todolistId] = action.payload.tasks.map((t) => ({
+              ...t,
+              entityStatus: "idle",
+            })))
+          : undefined;
+      });
   },
 });
-export const { removeTaskAC, setTasksAC, updateTaskAC, addTaskAC, changeTaskEntityStatusAC } = slice.actions;
+export const { removeTaskAC, updateTaskAC, addTaskAC, changeTaskEntityStatusAC } = slice.actions;
 //thunks
 
 export const removeTasksTC =
