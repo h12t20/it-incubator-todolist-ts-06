@@ -15,6 +15,22 @@ export type TasksStateType = {
   [key: string]: Array<TaskType>;
 };
 const initialState: TasksStateType = {};
+export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async (todolistId: string, thunkAPI) => {
+  const { dispatch } = thunkAPI;
+  try {
+    dispatch(setAppStatusAC({ status: "loading" }));
+    const res = await taskAPI.readTasks(todolistId);
+    dispatch(
+      setTasksAC({
+        todolistId,
+        tasks: res.data.items,
+      }),
+    );
+    dispatch(setAppStatusAC({ status: "succeeded" }));
+  } catch (error: any) {
+    handleServerNetworkError(error, dispatch);
+  }
+});
 const slice = createSlice({
   name: "tasks",
   initialState,
@@ -96,22 +112,7 @@ const slice = createSlice({
 });
 export const { removeTaskAC, setTasksAC, updateTaskAC, addTaskAC, changeTaskEntityStatusAC } = slice.actions;
 //thunks
-export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async (todolistId: string, thunkAPI) => {
-  const { dispatch } = thunkAPI;
-  try {
-    dispatch(setAppStatusAC({ status: "loading" }));
-    const res = await taskAPI.readTasks(todolistId);
-    dispatch(
-      setTasksAC({
-        todolistId,
-        tasks: res.data.items,
-      }),
-    );
-    dispatch(setAppStatusAC({ status: "succeeded" }));
-  } catch (error: any) {
-    handleServerNetworkError(error, dispatch);
-  }
-});
+
 export const removeTasksTC =
   (todolistId: string, taskId: string): AppThunk =>
   (dispatch) => {
