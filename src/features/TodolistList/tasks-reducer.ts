@@ -15,25 +15,22 @@ export type TasksStateType = {
   [key: string]: Array<TaskType>;
 };
 const initialState: TasksStateType = {};
-export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async (todolistId: string, thunkAPI) => {
+export const fetchTasks = createAsyncThunk<{ tasks: TaskType[]; todolistId: string }, string, { rejectValue: unknown }>(
+  "tasks/fetchTasks",
+  async (todolistId: string, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
-  try {
-    dispatch(setAppStatusAC({ status: "loading" }));
-    const res = await taskAPI.readTasks(todolistId);
-    const tasks = res.data.items;
-    /*dispatch(
-                setTasksAC({
-                  todolistId,
-                  tasks: res.data.items,
-                }),
-              );*/
-    dispatch(setAppStatusAC({ status: "succeeded" }));
-    return { tasks, todolistId };
-  } catch (error: any) {
-    handleServerNetworkError(error, dispatch);
-    return rejectWithValue(null);
-  }
-});
+    try {
+      dispatch(setAppStatusAC({ status: "loading" }));
+      const res = await taskAPI.readTasks(todolistId);
+      const tasks = res.data.items;
+      dispatch(setAppStatusAC({ status: "succeeded" }));
+      return { tasks, todolistId };
+    } catch (error: any) {
+      handleServerNetworkError(error, dispatch);
+      return rejectWithValue(null);
+    }
+  },
+);
 const slice = createSlice({
   name: "tasks",
   initialState,
