@@ -9,7 +9,7 @@ import {
   setTodolistAC,
 } from "./todolists-reducer";
 import { handleServerNetworkError, promiseHandler } from "./promise-handler";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
@@ -78,10 +78,10 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addTodolistAC, (state, action) => {
-          return {
-            ...state,
-            [action.payload.todoList.id]: [],
-          };
+        return {
+          ...state,
+          [action.payload.todoList.id]: [],
+        };
       })
       .addCase(removeTodolistAC, (state, action) => {
         delete state[action.payload.todolistId];
@@ -96,24 +96,22 @@ const slice = createSlice({
 });
 export const { removeTaskAC, setTasksAC, updateTaskAC, addTaskAC, changeTaskEntityStatusAC } = slice.actions;
 //thunks
-export const fetchTasksTC =
-  (todolistId: string): AppThunk =>
-  (dispatch) => {
-    taskAPI
-      .readTasks(todolistId)
-      .then((res) => {
-        dispatch(
-          setTasksAC({
-            todolistId,
-            tasks: res.data.items,
-          }),
-        );
-        dispatch(setAppStatusAC({ status: "succeeded" }));
-      })
-      .catch((error) => {
-        handleServerNetworkError(error, dispatch);
-      });
-  };
+export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async (todolistId: string, thunkAPI) => {
+  const { dispatch } = thunkAPI;
+  try {
+    dispatch(setAppStatusAC({ status: "loading" }));
+    const res = await taskAPI.readTasks(todolistId);
+    dispatch(
+      setTasksAC({
+        todolistId,
+        tasks: res.data.items,
+      }),
+    );
+    dispatch(setAppStatusAC({ status: "succeeded" }));
+  } catch (error: any) {
+    handleServerNetworkError(error, dispatch);
+  }
+});
 export const removeTasksTC =
   (todolistId: string, taskId: string): AppThunk =>
   (dispatch) => {
@@ -182,3 +180,5 @@ export const updateTaskTC =
     } else dispatch(setAppErrorAC({ error: "Some error occurred" }));
   };
 export const tasksReducer = slice.reducer;
+export const tasksActions = slice.actions;
+export const tasksThunks = { fetchTasks };
