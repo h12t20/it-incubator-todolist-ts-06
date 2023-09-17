@@ -8,29 +8,34 @@ import {
   removeTodolistAC,
   setTodolistAC,
 } from "./todolists-reducer";
-import { handleServerNetworkError, promiseHandler } from "./promise-handler";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { promiseHandler } from "./promise-handler";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAppAsyncThunk } from "../../utils/create-app-async-thunk";
+import { handleServerNetworkError } from "../../utils/error-utils";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
 };
 const initialState: TasksStateType = {};
-export const fetchTasks = createAsyncThunk<{ tasks: TaskType[]; todolistId: string }, string, { rejectValue: unknown }>(
-  "tasks/fetchTasks",
-  async (todolistId: string, thunkAPI) => {
-    const { dispatch, rejectWithValue } = thunkAPI;
-    try {
-      dispatch(setAppStatusAC({ status: "loading" }));
-      const res = await taskAPI.readTasks(todolistId);
-      const tasks = res.data.items;
-      dispatch(setAppStatusAC({ status: "succeeded" }));
-      return { tasks, todolistId };
-    } catch (error: any) {
-      handleServerNetworkError(error, dispatch);
-      return rejectWithValue(null);
-    }
+export const fetchTasks = createAppAsyncThunk<
+  {
+    tasks: TaskType[];
+    todolistId: string;
   },
-);
+  string
+>("tasks/fetchTasks", async (todolistId: string, thunkAPI) => {
+  const { dispatch, rejectWithValue } = thunkAPI;
+  try {
+    dispatch(setAppStatusAC({ status: "loading" }));
+    const res = await taskAPI.readTasks(todolistId);
+    const tasks = res.data.items;
+    dispatch(setAppStatusAC({ status: "succeeded" }));
+    return { tasks, todolistId };
+  } catch (error) {
+    handleServerNetworkError(error, dispatch);
+    return rejectWithValue(null);
+  }
+});
 const slice = createSlice({
   name: "tasks",
   initialState,
@@ -67,18 +72,6 @@ const slice = createSlice({
       const index = state[action.payload.todolistId].findIndex((t) => t.id === action.payload.taskId);
       if (index > -1) state[action.payload.todolistId][index] = action.payload.task;
     },
-    /*setTasksAC(
-        state,
-        action: PayloadAction<{
-          todolistId: string;
-          tasks: TaskType[];
-        }>,
-      ) {
-        state[action.payload.todolistId] = action.payload.tasks.map((t) => ({
-          ...t,
-          entityStatus: "idle",
-        }));
-      },*/
     changeTaskEntityStatusAC(
       state,
       action: PayloadAction<{
@@ -109,12 +102,10 @@ const slice = createSlice({
       })
       .addCase(clearDataAC, () => initialState)
       .addCase(fetchTasks.fulfilled, (state, action) => {
-        action.payload
-          ? (state[action.payload.todolistId] = action.payload.tasks.map((t) => ({
-              ...t,
-              entityStatus: "idle",
-            })))
-          : undefined;
+        state[action.payload.todolistId] = action.payload.tasks.map((t) => ({
+          ...t,
+          entityStatus: "idle",
+        }));
       });
   },
 });
