@@ -1,9 +1,9 @@
 import { AppThunk } from "app/store";
 import { authAPI, LoginParamsType } from "api/auth-api";
 import { setAppStatusAC, setIsInitializedAC } from "app/app-reducer";
-import { promiseHandler } from "../TodolistList/promise-handler";
 import { clearDataAC } from "../TodolistList/todolists-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { promiseHandler } from "../../utils/promise-handler-utils";
 
 const initialState = { isLoggedIn: false };
 const slice = createSlice({

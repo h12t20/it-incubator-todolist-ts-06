@@ -5,23 +5,23 @@ import { TaskStatuses } from "api/task-api";
 import { useAppDispatch, useAppSelector } from "app/hook";
 import { tasksSelectorCreator } from "app/selectors";
 
-export const useTodolist = (id: string, filter: FilterValuesType) => {
+export const useTodolist = (todolistId: string, filter: FilterValuesType) => {
   const dispatch = useAppDispatch();
-  const tasks = useAppSelector(tasksSelectorCreator(id));
+  const tasks = useAppSelector(tasksSelectorCreator(todolistId));
   const removeTodolist = useCallback(() => {
-    dispatch(deleteTodolistTC(id));
-  }, [id]);
+    dispatch(deleteTodolistTC(todolistId));
+  }, [todolistId]);
   const addTask = useCallback(
     (title: string) => {
-      dispatch(addTasksTC(id, title));
+      dispatch(addTasksTC({ todolistId, title }));
     },
-    [id],
+    [todolistId],
   );
   const onChangeTodoTitle = useCallback(
     (newValue: string) => {
-      dispatch(changeTodoTitleTC(id, newValue));
+      dispatch(changeTodoTitleTC(todolistId, newValue));
     },
-    [id],
+    [todolistId],
   );
   let tasksForTodolist = tasks;
   if (filter === "active") {
