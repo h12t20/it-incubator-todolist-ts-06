@@ -10,7 +10,7 @@ export type TasksStateType = {
 export const useApp = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(initializeAppTC());
+    dispatch(initializeAppTC({}));
   }, []);
   const isInitialized = useAppSelector(isInitializedSelector);
   return { isInitialized };

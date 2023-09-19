@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { changeTodoTitleTC, deleteTodolistTC, FilterValuesType } from "../todolists-reducer";
-import { addTasksTC } from "../tasks-reducer";
+import { changeTodoTitle, deleteTodolist, FilterValuesType } from "../todolists-reducer";
+import { addTasks } from "../tasks-reducer";
 import { TaskStatuses } from "api/task-api";
 import { useAppDispatch, useAppSelector } from "app/hook";
 import { tasksSelectorCreator } from "app/selectors";
@@ -9,21 +9,21 @@ export const useTodolist = (todolistId: string, filter: FilterValuesType) => {
   const dispatch = useAppDispatch();
   const tasks = useAppSelector(tasksSelectorCreator(todolistId));
   const removeTodolist = useCallback(() => {
-    dispatch(deleteTodolistTC(todolistId));
+    dispatch(deleteTodolist(todolistId));
   }, [todolistId]);
   const addTask = useCallback(
     (title: string) => {
-      dispatch(addTasksTC({ todolistId, title }));
+      dispatch(addTasks({ todolistId, title }));
     },
     [todolistId],
   );
   const onChangeTodoTitle = useCallback(
-    (newValue: string) => {
-      dispatch(changeTodoTitleTC(todolistId, newValue));
+    (title: string) => {
+      dispatch(changeTodoTitle({ todolistId, title }));
     },
     [todolistId],
   );
-  let tasksForTodolist = tasks;
+  let tasksForTodolist = tasks ? tasks : [];
   if (filter === "active") {
     tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.New);
   }

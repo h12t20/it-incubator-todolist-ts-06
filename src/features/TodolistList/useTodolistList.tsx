@@ -1,10 +1,13 @@
 import { useCallback, useEffect } from "react";
-import { createTodolistTC, fetchTodolistTC } from "./todolists-reducer";
+import { createTodolist, fetchTodolist } from "./todolists-reducer";
 import { useAppDispatch, useAppSelector } from "app/hook";
 import { isLoggedInSelector, todolistsSelector } from "app/selectors";
+import { fetchTasks } from "./tasks-reducer";
+import { TodolistType } from "../../api/todolist-api";
 
 export const useTodolistList = () => {
   useEffect(() => {
+    console.log(isLoggedIn);
     if (!isLoggedIn) {
       return;
     }
@@ -15,12 +18,16 @@ export const useTodolistList = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
   const addTodolist = useCallback(
     (title: string) => {
-      dispatch(createTodolistTC(title));
+      dispatch(createTodolist(title));
     },
     [dispatch],
   );
   const setTodolist = useCallback(() => {
-    dispatch(fetchTodolistTC());
+    dispatch(fetchTodolist()).then((res) =>
+      res.payload.data.map((tdl: TodolistType) => {
+        dispatch(fetchTasks(tdl.id));
+      }),
+    );
   }, [dispatch]);
   return {
     todolists,
