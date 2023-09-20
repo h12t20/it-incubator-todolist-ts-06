@@ -1,9 +1,8 @@
 import { todolistAPI, TodolistType } from "api/todolist-api";
 import { RequestStatusType, setAppStatusAC } from "app/app-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { promiseHandler } from "../../utils/promise-handler-utils";
-import { createAppAsyncThunk } from "../../utils/create-app-async-thunk";
-import { handleServerNetworkError } from "../../utils/handle-server-network-error";
+import { promiseHandler } from "utils/promise-handler-utils";
+import { createAppAsyncThunk, handleServerNetworkError } from "utils";
 
 const initialState: TodolistDomainType[] = [];
 //types
@@ -29,7 +28,7 @@ export const fetchTodolist = createAppAsyncThunk<any>("todolist/fetchTodolist", 
 });
 export const createTodolist = createAppAsyncThunk<{ item: TodolistType }, string>(
   "todolist/createTodolist",
-  async (title, thunkAPI) => {
+  (title, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
     return dispatch<any>(
       promiseHandler<{ item: TodolistType }>(todolistAPI.createTodolist(title), null, null, null, rejectWithValue),

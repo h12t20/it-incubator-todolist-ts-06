@@ -1,6 +1,5 @@
 import React from "react";
-import { AddItemForm } from "../../../components/additemform/AddItemForm";
-import { EditableSpan } from "../../../components/editablespan/EditableSpan";
+import { AddItemForm, EditableSpan } from "components";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Task } from "./task/Task";

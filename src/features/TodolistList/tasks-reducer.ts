@@ -2,10 +2,9 @@ import { taskAPI, TaskStatuses, TaskType } from "api/task-api";
 import { RequestStatusType, setAppErrorAC, setAppStatusAC } from "app/app-reducer";
 import { clearDataAC, todolistThunks } from "./todolists-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createAppAsyncThunk } from "../../utils/create-app-async-thunk";
+import { createAppAsyncThunk, handleServerNetworkError } from "utils";
+import { TodolistType } from "api/todolist-api";
 import { promiseHandler } from "../../utils/promise-handler-utils";
-import { TodolistType } from "../../api/todolist-api";
-import { handleServerNetworkError } from "../../utils/handle-server-network-error";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
@@ -49,7 +48,7 @@ export const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: s
 );
 export const addTasks = createAppAsyncThunk<{ item: TaskType }, AddTaskArgType>(
   "tasks/addTasks",
-  async (arg: AddTaskArgType, thunkAPI) => {
+  (arg: AddTaskArgType, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
     return dispatch<any>(
       promiseHandler(taskAPI.createTask(arg.todolistId, arg.title), null, arg.todolistId, null, rejectWithValue),
@@ -59,7 +58,7 @@ export const addTasks = createAppAsyncThunk<{ item: TaskType }, AddTaskArgType>(
 
 export const updateTask = createAppAsyncThunk<UpdateTaskReturnType, UpdateTaskArgType>(
   "tasks/updateTask",
-  async ({ taskId, todolistId, newValue, newStatus }, thunkAPI) => {
+  ({ taskId, todolistId, newValue, newStatus }, thunkAPI) => {
     const { dispatch, rejectWithValue, getState } = thunkAPI;
     const task = getState().tasks[todolistId].find((t) => t.id === taskId);
     if (task) {
@@ -86,7 +85,7 @@ export const updateTask = createAppAsyncThunk<UpdateTaskReturnType, UpdateTaskAr
 
 export const removeTasks = createAppAsyncThunk<removeTaskType, removeTaskType>(
   "tasks/removeTask",
-  async ({ todolistId, taskId }, thunkAPI) => {
+  ({ todolistId, taskId }, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
     return dispatch<any>(
       promiseHandler(

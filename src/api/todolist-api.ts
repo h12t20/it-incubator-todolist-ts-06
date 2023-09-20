@@ -15,7 +15,6 @@ export const todolistAPI = {
     return instance.get<Array<TodolistType>>("/todo-lists");
   },
 };
-
 //types
 export type ResponseType<
   D = {

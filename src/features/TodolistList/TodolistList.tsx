@@ -1,6 +1,6 @@
 import { useTodolistList } from "./useTodolistList";
 import Grid from "@mui/material/Grid";
-import { AddItemForm } from "components/additemform/AddItemForm";
+import { AddItemForm } from "components";
 import Paper from "@mui/material/Paper";
 import { Todolist } from "./todolist/Todolist";
 import Container from "@mui/material/Container";

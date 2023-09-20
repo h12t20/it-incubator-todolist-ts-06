@@ -5,8 +5,7 @@ import { ResponseType } from "../api/todolist-api";
 import { changeTaskEntityStatusAC, ResultCode } from "../features/TodolistList/tasks-reducer";
 import { changeTodolistEntityStatusAC } from "../features/TodolistList/todolists-reducer";
 import { TaskType } from "../api/task-api";
-import { handleServerAppError } from "./handle-server-app-error";
-import { handleServerNetworkError } from "./handle-server-network-error";
+import { handleServerAppError, handleServerNetworkError } from "utils";
 
 export type ThunkReturnType = {
   task?: TaskType;

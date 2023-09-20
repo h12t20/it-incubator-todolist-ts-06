@@ -1,8 +1,8 @@
 import { authAPI, LoginParamsType } from "api/auth-api";
 import { setIsInitializedAC } from "app/app-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { promiseHandler } from "../../utils/promise-handler-utils";
-import { createAppAsyncThunk } from "../../utils/create-app-async-thunk";
+import { promiseHandler } from "utils/promise-handler-utils";
+import { createAppAsyncThunk } from "utils";
 import { clearDataAC } from "../TodolistList/todolists-reducer";
 
 const initialState = { isLoggedIn: false };
@@ -28,21 +28,18 @@ export const logout = createAppAsyncThunk<{ value: boolean }, null>("auth/logOut
     ),
   );
 });
-export const initializeApp = createAppAsyncThunk<{ value: boolean }, null>(
-  "auth/initialized",
-  async (value: null, thunkAPI) => {
-    const { dispatch, rejectWithValue } = thunkAPI;
-    return dispatch<any>(
-      promiseHandler(
-        authAPI.me().finally(() => dispatch(setIsInitializedAC({ isInitialized: true }))),
-        { value: true },
-        null,
-        null,
-        rejectWithValue,
-      ),
-    );
-  },
-);
+export const initializeApp = createAppAsyncThunk<{ value: boolean }, null>("auth/initialized", (value: null, thunkAPI) => {
+  const { dispatch, rejectWithValue } = thunkAPI;
+  return dispatch<any>(
+    promiseHandler(
+      authAPI.me().finally(() => dispatch(setIsInitializedAC({ isInitialized: true }))),
+      { value: true },
+      null,
+      null,
+      rejectWithValue,
+    ),
+  );
+});
 const slice = createSlice({
   name: "auth",
   initialState,
@@ -69,7 +66,6 @@ const slice = createSlice({
       });
   },
 });
-
 export const setIsLoggedInAC = slice.actions.setIsLoggedInAC;
 export const authReducer = slice.reducer;
 export const authThunks = { login, logout, initializeApp };
