@@ -1,11 +1,11 @@
 import { AxiosResponse } from "axios";
 import { AppThunk } from "app/store";
-import { setAppStatusAC } from "../app/app-reducer";
-import { ResponseType } from "../api/todolist-api";
-import { changeTaskEntityStatusAC, ResultCode } from "../features/TodolistList/tasks-reducer";
-import { changeTodolistEntityStatusAC } from "../features/TodolistList/todolists-reducer";
-import { TaskType } from "../api/task-api";
-import { handleServerAppError, handleServerNetworkError } from "utils";
+import { setAppStatusAC } from "../../app/app-reducer";
+import { changeTaskEntityStatusAC, ResultCode } from "features/TodolistList/tasks-reducer";
+import { changeTodolistEntityStatusAC } from "features/TodolistList/todolists-reducer";
+import { BaseResponse, TaskType } from "../types/types";
+import { handleServerAppError } from "./handle-server-app-error";
+import { handleServerNetworkError } from "./handle-server-network-error";
 
 export type ThunkReturnType = {
   task?: TaskType;
@@ -17,7 +17,7 @@ export type ThunkReturnType = {
 };
 export const promiseHandler =
   <R>(
-    promise: Promise<AxiosResponse<ResponseType<R>, ResponseType<null>>>,
+    promise: Promise<AxiosResponse<BaseResponse<R>, BaseResponse>>,
     payload: ThunkReturnType | null,
     todolistId: string | null,
     taskId: string | null,

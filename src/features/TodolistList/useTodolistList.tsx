@@ -3,7 +3,7 @@ import { createTodolist, fetchTodolist } from "./todolists-reducer";
 import { useAppDispatch, useAppSelector } from "app/hook";
 import { isLoggedInSelector, todolistsSelector } from "app/selectors";
 import { fetchTasks } from "./tasks-reducer";
-import { TodolistType } from "../../api/todolist-api";
+import { TodolistType } from "../../common/types/types";
 
 export const useTodolistList = () => {
   useEffect(() => {

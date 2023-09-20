@@ -1,10 +1,10 @@
-import { ResponseType } from "../api/todolist-api";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { RootState } from "../app/store";
-import { setAppErrorAC, setAppStatusAC } from "../app/app-reducer";
+import { RootState } from "../../app/store";
+import { setAppErrorAC, setAppStatusAC } from "../../app/app-reducer";
+import { BaseResponse } from "../types/types";
 
 export const handleServerAppError = <T>(
-  data: ResponseType<T>,
+  data: BaseResponse<T>,
   dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
 ) => {
   if (data.messages.length) {

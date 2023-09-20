@@ -1,13 +1,12 @@
 import React from "react";
-import { AddItemForm, EditableSpan } from "components";
+import { AddItemForm, EditableSpan } from "common/components";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Task } from "./task/Task";
 import { useTodolist } from "./useTodolist";
-import { FilterValuesType } from "../todolists-reducer";
 import { Filter } from "./filter/Filter";
-import { RequestStatusType } from "../../../app/app-reducer";
 import s from "./Todolist.module.css";
+import { FilterValuesType, RequestStatusType } from "common/types/types";
 
 type PropsType = {
   id: string;

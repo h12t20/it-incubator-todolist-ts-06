@@ -2,7 +2,7 @@ import React from "react";
 import s from "app/App.module.scss";
 import { TodolistList } from "features/TodolistList/TodolistList";
 import { Header } from "features/header/Header";
-import { ErrorSnackbar } from "components/errorsnachbar/ErrorSnackbar";
+import { ErrorSnackbar } from "common/components/errorsnachbar/ErrorSnackbar";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Login } from "features/login/Login";
 import { CircularProgress } from "@mui/material";

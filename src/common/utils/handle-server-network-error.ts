@@ -1,7 +1,7 @@
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
-import { RootState } from "../app/store";
+import { RootState } from "../../app/store";
 import axios from "axios";
-import { setAppErrorAC, setAppStatusAC } from "../app/app-reducer";
+import { setAppErrorAC, setAppStatusAC } from "../../app/app-reducer";
 
 export const handleServerNetworkError = (
   err: unknown,

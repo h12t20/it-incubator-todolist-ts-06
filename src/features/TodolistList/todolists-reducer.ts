@@ -1,16 +1,12 @@
-import { todolistAPI, TodolistType } from "api/todolist-api";
-import { RequestStatusType, setAppStatusAC } from "app/app-reducer";
+import { todolistAPI } from "common/api/todolist-api";
+import { setAppStatusAC } from "app/app-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { promiseHandler } from "utils/promise-handler-utils";
-import { createAppAsyncThunk, handleServerNetworkError } from "utils";
+import { promiseHandler } from "common/utils/promise-handler-utils";
+import { createAppAsyncThunk, handleServerNetworkError } from "common/utils";
+import { FilterValuesType, RequestStatusType, TodolistDomainType, TodolistType } from "common/types/types";
 
 const initialState: TodolistDomainType[] = [];
 //types
-export type FilterValuesType = "all" | "active" | "completed";
-export type TodolistDomainType = TodolistType & {
-  filter: FilterValuesType;
-  entityStatus: RequestStatusType;
-};
 export type TodolistChangeType = {
   todolistId: string;
   title: string;

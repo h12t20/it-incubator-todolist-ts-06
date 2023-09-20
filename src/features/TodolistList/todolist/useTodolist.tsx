@@ -1,9 +1,10 @@
 import { useCallback } from "react";
-import { changeTodoTitle, deleteTodolist, FilterValuesType } from "../todolists-reducer";
+import { changeTodoTitle, deleteTodolist } from "../todolists-reducer";
 import { addTasks } from "../tasks-reducer";
-import { TaskStatuses } from "api/task-api";
 import { useAppDispatch, useAppSelector } from "app/hook";
 import { tasksSelectorCreator } from "app/selectors";
+import { TaskStatuses } from "common/enums";
+import { FilterValuesType } from "common/types/types";
 
 export const useTodolist = (todolistId: string, filter: FilterValuesType) => {
   const dispatch = useAppDispatch();

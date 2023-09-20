@@ -1,10 +1,5 @@
-import {
-  changeTodoFilterAC,
-  FilterValuesType,
-  TodolistDomainType,
-  todoListsReducer,
-  todolistThunks,
-} from "./todolists-reducer";
+import { changeTodoFilterAC, todoListsReducer, todolistThunks } from "./todolists-reducer";
+import { FilterValuesType, TodolistDomainType } from "../../common/types/types";
 
 export const startState: Array<TodolistDomainType> = [
   { id: "todolistId1", title: "What to learn", filter: "all", entityStatus: "idle", order: 0, addedDate: "" },

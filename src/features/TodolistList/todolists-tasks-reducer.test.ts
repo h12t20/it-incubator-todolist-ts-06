@@ -1,6 +1,7 @@
 import { tasksReducer, TasksStateType } from "./tasks-reducer";
-import { TodolistDomainType, todoListsReducer, todolistThunks } from "./todolists-reducer";
+import { todoListsReducer, todolistThunks } from "./todolists-reducer";
 import { startState } from "./tasks-reducer.test";
+import { TodolistDomainType } from "common/types/types";
 
 const todo: TodolistDomainType = {
   id: "todolist1",

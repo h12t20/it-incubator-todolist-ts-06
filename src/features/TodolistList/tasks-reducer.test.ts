@@ -1,6 +1,7 @@
 import { tasksReducer, TasksStateType, tasksThunks } from "./tasks-reducer";
-import { TaskPriorities, TaskStatuses, TaskType } from "api/task-api";
 import { todolistThunks } from "./todolists-reducer";
+import { TaskPriorities, TaskStatuses } from "common/enums";
+import { TaskType } from "../../common/types/types";
 
 const nTask = {
   id: "5",

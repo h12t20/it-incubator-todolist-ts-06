@@ -1,10 +1,11 @@
-import { taskAPI, TaskStatuses, TaskType } from "api/task-api";
-import { RequestStatusType, setAppErrorAC, setAppStatusAC } from "app/app-reducer";
+import { taskAPI } from "common/api/task-api";
+import { setAppErrorAC, setAppStatusAC } from "app/app-reducer";
 import { clearDataAC, todolistThunks } from "./todolists-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createAppAsyncThunk, handleServerNetworkError } from "utils";
-import { TodolistType } from "api/todolist-api";
-import { promiseHandler } from "../../utils/promise-handler-utils";
+import { createAppAsyncThunk, handleServerNetworkError } from "common/utils";
+import { promiseHandler } from "common/utils/promise-handler-utils";
+import { TaskStatuses } from "common/enums";
+import { RequestStatusType, TaskType, TodolistType } from "common/types/types";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
