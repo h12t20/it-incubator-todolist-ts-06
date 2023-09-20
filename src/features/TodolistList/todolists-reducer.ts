@@ -1,8 +1,9 @@
 import { todolistAPI, TodolistType } from "api/todolist-api";
 import { RequestStatusType, setAppStatusAC } from "app/app-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { handleServerAppError, handleServerNetworkError, promiseHandler } from "../../utils/promise-handler-utils";
+import { promiseHandler } from "../../utils/promise-handler-utils";
 import { createAppAsyncThunk } from "../../utils/create-app-async-thunk";
+import { handleServerNetworkError } from "../../utils/handle-server-network-error";
 
 const initialState: TodolistDomainType[] = [];
 //types
@@ -26,24 +27,13 @@ export const fetchTodolist = createAppAsyncThunk<any>("todolist/fetchTodolist", 
     return rejectWithValue(null);
   }
 });
-export const createTodolist = createAppAsyncThunk<{ todoList: TodolistType }, string>(
+export const createTodolist = createAppAsyncThunk<{ item: TodolistType }, string>(
   "todolist/createTodolist",
   async (title, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
-    try {
-      dispatch(setAppStatusAC({ status: "loading" }));
-      const res = await todolistAPI.createTodolist(title);
-      if (res.data.resultCode === 0) {
-        dispatch(setAppStatusAC({ status: "succeeded" }));
-        return { todoList: res.data.data.item };
-      } else {
-        handleServerAppError(res.data, dispatch);
-        return rejectWithValue(null);
-      }
-    } catch (error) {
-      handleServerNetworkError(error, dispatch);
-      return rejectWithValue(null);
-    }
+    return dispatch<any>(
+      promiseHandler<{ item: TodolistType }>(todolistAPI.createTodolist(title), null, null, null, rejectWithValue),
+    );
   },
 );
 export const changeTodoTitle = createAppAsyncThunk<{ todolistId: string; title: string }, TodolistChangeType>(
@@ -117,8 +107,9 @@ const slice = createSlice({
         if (index > -1) state.splice(index, 1);
       })
       .addCase(createTodolist.fulfilled, (state, action) => {
+        console.log(action);
         state.unshift({
-          ...action.payload.todoList,
+          ...action.payload.item,
           filter: "all",
           entityStatus: "idle",
         });

@@ -6,18 +6,16 @@ import { createAppAsyncThunk } from "../../utils/create-app-async-thunk";
 import { clearDataAC } from "../TodolistList/todolists-reducer";
 
 const initialState = { isLoggedIn: false };
-// @ts-ignore
-export const loginTC = createAppAsyncThunk<any, LoginParamsType>(
+export const login = createAppAsyncThunk<{ value: boolean }, LoginParamsType>(
   "auth/logIn",
   async (loginParams: LoginParamsType, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
-    return dispatch(promiseHandler(authAPI.login(loginParams), { value: true }, null, null, rejectWithValue));
+    return dispatch<any>(promiseHandler(authAPI.login(loginParams), { value: true }, null, null, rejectWithValue));
   },
 );
-
-export const logoutTC = createAppAsyncThunk<any, any>("auth/logOut", (value: null, thunkAPI) => {
+export const logout = createAppAsyncThunk<{ value: boolean }, null>("auth/logOut", (value: null, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI;
-  return dispatch(
+  return dispatch<any>(
     promiseHandler(
       authAPI.logout().then((res) => {
         if (res.data.resultCode === 0) dispatch(clearDataAC());
@@ -30,20 +28,21 @@ export const logoutTC = createAppAsyncThunk<any, any>("auth/logOut", (value: nul
     ),
   );
 });
-
-export const initializeAppTC = createAppAsyncThunk<any, any>("auth/initialized", async (value: null, thunkAPI) => {
-  const { dispatch, rejectWithValue } = thunkAPI;
-  return dispatch(
-    promiseHandler(
-      authAPI.me().finally(() => dispatch(setIsInitializedAC({ isInitialized: true }))),
-      { value: true },
-      null,
-      null,
-      rejectWithValue,
-    ),
-  );
-});
-
+export const initializeApp = createAppAsyncThunk<{ value: boolean }, null>(
+  "auth/initialized",
+  async (value: null, thunkAPI) => {
+    const { dispatch, rejectWithValue } = thunkAPI;
+    return dispatch<any>(
+      promiseHandler(
+        authAPI.me().finally(() => dispatch(setIsInitializedAC({ isInitialized: true }))),
+        { value: true },
+        null,
+        null,
+        rejectWithValue,
+      ),
+    );
+  },
+);
 const slice = createSlice({
   name: "auth",
   initialState,
@@ -59,13 +58,13 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginTC.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.isLoggedIn = action.payload.value;
       })
-      .addCase(logoutTC.fulfilled, (state, action) => {
+      .addCase(logout.fulfilled, (state, action) => {
         state.isLoggedIn = action.payload.value;
       })
-      .addCase(initializeAppTC.fulfilled, (state, action) => {
+      .addCase(initializeApp.fulfilled, (state, action) => {
         state.isLoggedIn = action.payload.value;
       });
   },
@@ -73,3 +72,4 @@ const slice = createSlice({
 
 export const setIsLoggedInAC = slice.actions.setIsLoggedInAC;
 export const authReducer = slice.reducer;
+export const authThunks = { login, logout, initializeApp };

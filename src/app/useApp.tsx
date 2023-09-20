@@ -1,7 +1,7 @@
 import { TaskType } from "api/task-api";
 import { useAppDispatch, useAppSelector } from "./hook";
 import { useEffect } from "react";
-import { initializeAppTC } from "features/login/auth-reducer";
+import { initializeApp } from "features/login/auth-reducer";
 import { isInitializedSelector } from "app/selectors";
 
 export type TasksStateType = {
@@ -10,7 +10,7 @@ export type TasksStateType = {
 export const useApp = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(initializeAppTC({}));
+    dispatch(initializeApp(null));
   }, []);
   const isInitialized = useAppSelector(isInitializedSelector);
   return { isInitialized };

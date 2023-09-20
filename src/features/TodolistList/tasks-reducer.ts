@@ -3,8 +3,9 @@ import { RequestStatusType, setAppErrorAC, setAppStatusAC } from "app/app-reduce
 import { clearDataAC, todolistThunks } from "./todolists-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "../../utils/create-app-async-thunk";
-import { handleServerNetworkError, promiseHandler } from "../../utils/promise-handler-utils";
+import { promiseHandler } from "../../utils/promise-handler-utils";
 import { TodolistType } from "../../api/todolist-api";
+import { handleServerNetworkError } from "../../utils/handle-server-network-error";
 
 export type TasksStateType = {
   [key: string]: Array<TaskType>;
@@ -25,6 +26,11 @@ export type UpdateTaskArgType = {
 };
 export type UpdateTaskReturnType = { todolistId: string; taskId: string; task: TaskType };
 const initialState: TasksStateType = {};
+export const ResultCode = {
+  success: 0,
+  error: 1,
+  captcha: 10,
+} as const;
 export const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: string }, string>(
   "tasks/fetchTasks",
   async (todolistId: string, thunkAPI) => {
@@ -41,7 +47,7 @@ export const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: s
     }
   },
 );
-export const addTasks = createAppAsyncThunk<{ task: TaskType }, AddTaskArgType>(
+export const addTasks = createAppAsyncThunk<{ item: TaskType }, AddTaskArgType>(
   "tasks/addTasks",
   async (arg: AddTaskArgType, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
@@ -113,9 +119,10 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(todolistThunks.createTodolist.fulfilled, (state, action) => {
+        console.log(action);
         return {
           ...state,
-          [action.payload.todoList.id]: [],
+          [action.payload.item.id]: [],
         };
       })
       .addCase(todolistThunks.deleteTodolist.fulfilled, (state, action) => {
@@ -134,8 +141,8 @@ const slice = createSlice({
         }));
       })
       .addCase(addTasks.fulfilled, (state, action) => {
-        state[action.payload.task.todoListId].unshift({
-          ...action.payload.task,
+        state[action.payload.item.todoListId].unshift({
+          ...action.payload.item,
           entityStatus: "idle",
         });
       })
@@ -149,7 +156,7 @@ const slice = createSlice({
       });
   },
 });
-export const {changeTaskEntityStatusAC} = slice.actions;
+export const { changeTaskEntityStatusAC } = slice.actions;
 export const tasksReducer = slice.reducer;
 export const tasksActions = slice.actions;
 export const tasksThunks = { fetchTasks, addTasks, updateTask, removeTasks };

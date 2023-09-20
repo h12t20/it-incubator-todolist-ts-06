@@ -245,7 +245,7 @@ test("title of specified task should be changed", () => {
 });
 test("new array should be added when new todolist is added", () => {
   const newTodo = {
-    todoList: {
+    item: {
       id: "new todolist",
       title: "",
       addedDate: "",

@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "app/hook";
 import { useFormik } from "formik";
-import { loginTC } from "./auth-reducer";
+import { login } from "./auth-reducer";
 import { isLoggedInSelector } from "app/selectors";
 
 type FormikErrorType = {
@@ -27,7 +27,7 @@ export const useLogin = () => {
       return errors;
     },
     onSubmit: (values) => {
-      dispatch(loginTC(values));
+      dispatch(login(values));
       formik.resetForm();
     },
   });
