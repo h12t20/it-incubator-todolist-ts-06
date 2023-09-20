@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { AppThunk, RootState } from "app/store";
 import { setAppErrorAC, setAppStatusAC } from "../app/app-reducer";
 import { ResponseType } from "../api/todolist-api";
-import { AnyAction, Dispatch, ThunkDispatch } from "@reduxjs/toolkit";
+import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 import { changeTaskEntityStatusAC } from "../features/TodolistList/tasks-reducer";
 import { changeTodolistEntityStatusAC } from "../features/TodolistList/todolists-reducer";
 import { TaskType } from "../api/task-api";
@@ -15,7 +15,17 @@ export type ThunkReturnType = {
   value?: boolean;
   isInitialized?: boolean;
 };
-
+export const handleServerAppError = <T>(
+  data: ResponseType<T>,
+  dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
+) => {
+  if (data.messages.length) {
+    dispatch(setAppErrorAC({ error: data.messages[0] }));
+  } else {
+    dispatch(setAppErrorAC({ error: "Some error occurred" }));
+  }
+  dispatch(setAppStatusAC({ status: "failed" }));
+};
 export const handleServerNetworkError = (
   err: unknown,
   dispatch: ThunkDispatch<RootState, unknown, AnyAction>,
@@ -48,15 +58,13 @@ export const promiseHandler =
       // @ts-ignore
       const task = payload ? null : res.data.data.item;
       if (res.data.resultCode === 0) {
-        // @ts-ignore
         dispatch(setAppStatusAC({ status: "succeeded" }));
         todolistId && !taskId && dispatch(changeTodolistEntityStatusAC({ todolistId, status: "succeeded" }));
         todolistId && taskId && dispatch(changeTaskEntityStatusAC({ todolistId, taskId, status: "succeeded" }));
         if (payload) return { ...payload };
         else return { task, todolistId };
       } else {
-        const errorMessage = res.data.messages.length ? res.data.messages[0] : "Some error occurred";
-        new Error(errorMessage);
+        handleServerAppError(res.data, dispatch);
         return rejectWithValue(null);
       }
     } catch (error) {
@@ -66,4 +74,3 @@ export const promiseHandler =
       return rejectWithValue(null);
     }
   };
-export type ErrorUtilsDispatchType = Dispatch<AnyAction>;

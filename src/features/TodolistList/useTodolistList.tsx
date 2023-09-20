@@ -7,7 +7,6 @@ import { TodolistType } from "../../api/todolist-api";
 
 export const useTodolistList = () => {
   useEffect(() => {
-    console.log(isLoggedIn);
     if (!isLoggedIn) {
       return;
     }
