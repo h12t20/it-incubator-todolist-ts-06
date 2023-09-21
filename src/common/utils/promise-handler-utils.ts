@@ -28,7 +28,6 @@ export const promiseHandler =
       todolistId && !taskId && dispatch(changeTodolistEntityStatusAC({ todolistId, status: "loading" }));
       todolistId && taskId && dispatch(changeTaskEntityStatusAC({ todolistId, taskId, status: "loading" }));
       const res = await promise;
-      // @ts-ignore
       const item = payload ? null : res.data.data.item;
       if (res.data.resultCode === ResultCode.success) {
         dispatch(setAppStatusAC({ status: "succeeded" }));

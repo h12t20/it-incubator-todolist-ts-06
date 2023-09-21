@@ -1,14 +1,12 @@
 import { TaskPriorities, TaskStatuses } from "../enums";
 
-export type BaseResponse<
-  D = {
-    item: TaskType;
-  },
-> = {
+export type BaseResponse<D = TaskType> = {
   resultCode: number;
   messages: Array<string>;
   fieldsErrors: Array<string>;
-  data: D;
+  data: {
+    item: D;
+  };
 };
 export type TodolistType = {
   id: string;
