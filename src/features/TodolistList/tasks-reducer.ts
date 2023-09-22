@@ -99,7 +99,6 @@ export const removeTasks = createAppAsyncThunk<removeTaskType, removeTaskType>(
     );
   },
 );
-
 const slice = createSlice({
   name: "tasks",
   initialState,
