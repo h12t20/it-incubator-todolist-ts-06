@@ -156,6 +156,7 @@ const slice = createSlice({
       });
   },
 });
+
 export const { changeTaskEntityStatusAC } = slice.actions;
 export const tasksReducer = slice.reducer;
 export const tasksActions = slice.actions;
