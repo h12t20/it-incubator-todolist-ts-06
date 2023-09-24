@@ -56,7 +56,6 @@ export const addTasks = createAppAsyncThunk<{ item: TaskType }, AddTaskArgType>(
     );
   },
 );
-
 export const updateTask = createAppAsyncThunk<UpdateTaskReturnType, UpdateTaskArgType>(
   "tasks/updateTask",
   ({ taskId, todolistId, newValue, newStatus }, thunkAPI) => {
@@ -83,7 +82,6 @@ export const updateTask = createAppAsyncThunk<UpdateTaskReturnType, UpdateTaskAr
     }
   },
 );
-
 export const removeTasks = createAppAsyncThunk<removeTaskType, removeTaskType>(
   "tasks/removeTask",
   ({ todolistId, taskId }, thunkAPI) => {
