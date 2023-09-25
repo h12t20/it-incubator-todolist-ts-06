@@ -27,20 +27,20 @@ export const useLogin = () => {
       if (values.password.length < 4) errors.password = "Must be more then 3 characters";
       return errors;
     },
-      onSubmit: (values, formikHelpers) => {
-          formikHelpers.setFieldTouched("email", true, true).then();
-          formikHelpers.setFieldTouched("password", true, true).then();
-          dispatch(login(values))
-              .unwrap()
-              .then(() => formik.resetForm())
-              .catch((error: BaseResponse) => {
-                  formikHelpers.setFieldTouched("email", true, false).then();
-                  formikHelpers.setFieldTouched("password", true, false).then();
-                  error.fieldsErrors?.forEach((f) => {
-                      formikHelpers.setFieldError(f.field, f.error);
-                  });
-                  if (error.messages) formikHelpers.setFieldError("password", error.messages[0]);
-              });
+    onSubmit: (values, formikHelpers) => {
+      formikHelpers.setFieldTouched("email", true, true).then();
+      formikHelpers.setFieldTouched("password", true, true).then();
+      dispatch(login(values))
+        .unwrap()
+        .then(() => formik.resetForm())
+        .catch((error: BaseResponse) => {
+          formikHelpers.setFieldTouched("email", true, false).then();
+          formikHelpers.setFieldTouched("password", true, false).then();
+          error.fieldsErrors?.forEach((f) => {
+            formikHelpers.setFieldError(f.field, f.error);
+          });
+          if (error.messages) formikHelpers.setFieldError("password", error.messages[0]);
+        });
     },
   });
   return {
