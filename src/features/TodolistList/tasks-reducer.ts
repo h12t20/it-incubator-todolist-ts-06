@@ -116,7 +116,6 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(todolistThunks.createTodolist.fulfilled, (state, action) => {
-        console.log(action);
         return {
           ...state,
           [action.payload.item.id]: [],

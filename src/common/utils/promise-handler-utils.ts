@@ -22,6 +22,7 @@ export const promiseHandler =
     todolistId: string | null,
     taskId: string | null,
     rejectWithValue: any,
+    showError: boolean = true,
   ): AppThunk =>
   async (dispatch) => {
     try {
@@ -36,8 +37,8 @@ export const promiseHandler =
         if (payload) return { ...payload };
         else return { item, todolistId };
       } else {
-        handleServerAppError(res.data, dispatch);
-        return rejectWithValue(null);
+        showError ? handleServerAppError(res.data, dispatch) : dispatch(setAppStatusAC({ status: "failed" }));
+        return rejectWithValue(showError ? null : res.data);
       }
     } catch (error) {
       handleServerNetworkError(error, dispatch);

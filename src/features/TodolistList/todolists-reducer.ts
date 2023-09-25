@@ -101,7 +101,6 @@ const slice = createSlice({
         if (index > -1) state.splice(index, 1);
       })
       .addCase(createTodolist.fulfilled, (state, action) => {
-        console.log(action);
         state.unshift({
           ...action.payload.item,
           filter: "all",

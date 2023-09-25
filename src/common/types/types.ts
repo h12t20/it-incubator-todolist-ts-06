@@ -1,9 +1,14 @@
 import { TaskPriorities, TaskStatuses } from "../enums";
 
+export type FieldErrorType = {
+  field: string;
+  error: string;
+};
+
 export type BaseResponse<D = TaskType> = {
   resultCode: number;
   messages: Array<string>;
-  fieldsErrors: Array<string>;
+  fieldsErrors: FieldErrorType[];
   data: {
     item: D;
   };
