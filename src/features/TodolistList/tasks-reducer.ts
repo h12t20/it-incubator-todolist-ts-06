@@ -52,7 +52,7 @@ export const addTasks = createAppAsyncThunk<{ item: TaskType }, AddTaskArgType>(
   (arg: AddTaskArgType, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
     return dispatch<any>(
-      promiseHandler(taskAPI.createTask(arg.todolistId, arg.title), null, arg.todolistId, null, rejectWithValue),
+      promiseHandler(taskAPI.createTask(arg.todolistId, arg.title), rejectWithValue, null, arg.todolistId),
     );
   },
 );
@@ -70,10 +70,10 @@ export const updateTask = createAppAsyncThunk<UpdateTaskReturnType, UpdateTaskAr
       return dispatch<any>(
         promiseHandler(
           taskAPI.updateTask(todolistId, taskId, changedTask),
+          rejectWithValue,
           { taskId, task: changedTask, todolistId },
           todolistId,
           taskId,
-          rejectWithValue,
         ),
       );
     } else {
@@ -89,10 +89,10 @@ export const removeTasks = createAppAsyncThunk<removeTaskType, removeTaskType>(
     return dispatch<any>(
       promiseHandler(
         taskAPI.deleteTask(todolistId, taskId),
+        rejectWithValue,
         { taskId, todolistId },
         todolistId,
         taskId,
-        rejectWithValue,
       ),
     );
   },

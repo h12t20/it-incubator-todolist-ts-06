@@ -10,7 +10,7 @@ export const login = createAppAsyncThunk<{ value: boolean }, LoginParamsType>(
   async (loginParams: LoginParamsType, thunkAPI) => {
     const { dispatch, rejectWithValue } = thunkAPI;
     return dispatch<any>(
-      promiseHandler(authAPI.login(loginParams), { value: true }, null, null, rejectWithValue, false),
+      promiseHandler(authAPI.login(loginParams), rejectWithValue, { value: true }, null, null, false),
     );
   },
 );
@@ -27,10 +27,8 @@ export const logout = createAppAsyncThunk<
         if (res.data.resultCode === 0) dispatch(clearDataAC());
         return res;
       }),
-      { value: false },
-      null,
-      null,
       rejectWithValue,
+      { value: false },
     ),
   );
 });
@@ -44,10 +42,10 @@ export const initializeApp = createAppAsyncThunk<
   return dispatch<any>(
     promiseHandler(
       authAPI.me().finally(() => dispatch(setIsInitializedAC({ isInitialized: true }))),
+      rejectWithValue,
       { value: true },
       null,
       null,
-      rejectWithValue,
       false,
     ),
   );

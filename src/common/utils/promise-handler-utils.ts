@@ -18,14 +18,15 @@ export type ThunkReturnType = {
 export const promiseHandler =
   <R>(
     promise: Promise<AxiosResponse<BaseResponse<R>, BaseResponse>>,
-    payload: ThunkReturnType | null,
-    todolistId: string | null,
-    taskId: string | null,
     rejectWithValue: any,
+    payload: ThunkReturnType | null = null,
+    todolistId: string | null = null,
+    taskId: string | null = null,
     showError: boolean = true,
   ): AppThunk =>
   async (dispatch) => {
     try {
+      dispatch(setAppStatusAC({ status: "loading" }));
       todolistId && !taskId && dispatch(changeTodolistEntityStatusAC({ todolistId, status: "loading" }));
       todolistId && taskId && dispatch(changeTaskEntityStatusAC({ todolistId, taskId, status: "loading" }));
       const res = await promise;
