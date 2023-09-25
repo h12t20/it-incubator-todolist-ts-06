@@ -6,7 +6,6 @@ import { createAppAsyncThunk, handleServerNetworkError } from "common/utils";
 import { FilterValuesType, RequestStatusType, TodolistDomainType, TodolistType } from "common/types/types";
 
 const initialState: TodolistDomainType[] = [];
-//types
 export type TodolistChangeType = {
   todolistId: string;
   title: string;
@@ -93,7 +92,7 @@ const slice = createSlice({
           entityStatus: "idle",
         }));
       })
-      .addCase(changeTodoTitle.fulfilled, (state, action) => {
+      .addCase(changeTodoTitle.fulfilled, (state, action: any) => {
         const index = state.findIndex((tl) => tl.id === action.payload.todolistId);
         if (index > -1) state[index].title = action.payload.title;
       })
