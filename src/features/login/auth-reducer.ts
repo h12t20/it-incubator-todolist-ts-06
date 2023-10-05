@@ -10,7 +10,7 @@ export const login = createAppAsyncThunk<
     value: boolean;
   },
   LoginParamsType
->("auth/logIn", async (loginParams: LoginParamsType, thunkAPI) => {
+>("auth/logIn", (loginParams: LoginParamsType, thunkAPI) => {
   const { dispatch, rejectWithValue } = thunkAPI;
   return dispatch<any>(
     promiseHandler({

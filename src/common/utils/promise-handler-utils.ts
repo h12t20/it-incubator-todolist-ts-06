@@ -17,7 +17,7 @@ export type ThunkReturnType = {
 };
 export type PromiseHandlerType<R> = {
   promise: Promise<AxiosResponse<BaseResponse<R>, BaseResponse>>;
-  rejectWithValue?: any;
+  rejectWithValue: any;
   payload?: ThunkReturnType | null;
   todolistId?: string;
   taskId?: string;

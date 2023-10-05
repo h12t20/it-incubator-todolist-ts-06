@@ -12,18 +12,6 @@ export const store = configureStore({
     auth: authReducer,
   },
   devTools: true,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore these field paths in all actions
-        ignoredActionPaths: [
-          `payload.meta.arg.promise`,
-          `meta.arg.promise`,
-          `meta.arg.rejectWithValue`,
-          `payload.meta.arg.rejectWithValue`,
-        ],
-      },
-    }),
 });
 //types
 export type AppDispatch = typeof store.dispatch;
