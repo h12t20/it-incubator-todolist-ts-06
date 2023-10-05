@@ -9,7 +9,7 @@ export const newTodolistTitle = "New Todolist";
 test("correct todolist should be removed", () => {
   const endState = todoListsReducer(
     startState,
-    todolistThunks.deleteTodolist.fulfilled({ payload: { todolistId: "todolistId1" } }, "", "todolistId1"),
+    todolistThunks.deleteTodolist.fulfilled({ todolistId: "todolistId1" }, "", "todolistId1"),
   );
   expect(endState.length).toBe(1);
   expect(endState[0].id).toBe("todolistId2");
@@ -25,7 +25,7 @@ test("correct todolist should be added", () => {
   };
   const endState = todoListsReducer(
     startState,
-    todolistThunks.createTodolist.fulfilled({ payload: { item: newTodolist } }, "", newTodolistTitle),
+    todolistThunks.createTodolist.fulfilled({ item: newTodolist }, "", newTodolistTitle),
   );
   expect(endState.length).toBe(3);
   expect(endState[0].title).toBe(newTodolistTitle);

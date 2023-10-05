@@ -21,24 +21,20 @@ export const fetchTodolist = createAppAsyncThunk<any>("todolist/fetchTodolist", 
     return rejectWithValue(null);
   }
 });
-export const createTodolist = createAppAsyncThunk<
-  {
-    payload: {
-      item: TodolistType;
-    };
+export const createTodolist = createAppAsyncThunk<{ item: TodolistType }, string>(
+  "todolist/createTodolist",
+  (title, thunkAPI) => {
+    const { dispatch, rejectWithValue } = thunkAPI;
+    return dispatch<any>(
+      promiseHandler<{
+        item: TodolistType;
+      }>({
+        promise: todolistAPI.createTodolist(title),
+        rejectWithValue,
+      }),
+    );
   },
-  string
->("todolist/createTodolist", (title, thunkAPI) => {
-  const { dispatch, rejectWithValue } = thunkAPI;
-  return dispatch<any>(
-    promiseHandler<{
-      item: TodolistType;
-    }>({
-      promise: todolistAPI.createTodolist(title),
-      rejectWithValue,
-    }),
-  );
-});
+);
 export const changeTodoTitle = createAppAsyncThunk<{ todolistId: string; title: string }, TodolistChangeType>(
   "todolist/changeTodoTitle",
   ({ todolistId, title }, thunkAPI) => {
@@ -55,23 +51,19 @@ export const changeTodoTitle = createAppAsyncThunk<{ todolistId: string; title: 
     );
   },
 );
-export const deleteTodolist = createAppAsyncThunk<
-  {
-    payload: {
-      todolistId: string;
-    };
+export const deleteTodolist = createAppAsyncThunk<{ todolistId: string }, string>(
+  "todolist/deleteTodoList",
+  (todolistId: string, thunkAPI) => {
+    const { dispatch } = thunkAPI;
+    return dispatch<any>(
+      promiseHandler({
+        promise: todolistAPI.deleteTodolist(todolistId),
+        payload: { todolistId },
+        todolistId,
+      }),
+    );
   },
-  string
->("todolist/deleteTodoList", (todolistId: string, thunkAPI) => {
-  const { dispatch } = thunkAPI;
-  return dispatch<any>(
-    promiseHandler({
-      promise: todolistAPI.deleteTodolist(todolistId),
-      payload: { todolistId },
-      todolistId,
-    }),
-  );
-});
+);
 
 const slice = createSlice({
   name: "todolist",
@@ -111,16 +103,16 @@ const slice = createSlice({
         }));
       })
       .addCase(changeTodoTitle.fulfilled, (state, action: any) => {
-        const index = state.findIndex((tl) => tl.id === action.payload.payload.todolistId);
-        if (index > -1) state[index].title = action.payload.payload.title;
+        const index = state.findIndex((tl) => tl.id === action.payload.todolistId);
+        if (index > -1) state[index].title = action.payload.title;
       })
       .addCase(deleteTodolist.fulfilled, (state, action) => {
-        const index = state.findIndex((tl) => tl.id === action.payload.payload.todolistId);
+        const index = state.findIndex((tl) => tl.id === action.payload.todolistId);
         if (index > -1) state.splice(index, 1);
       })
       .addCase(createTodolist.fulfilled, (state, action) => {
         state.unshift({
-          ...action.payload.payload.item,
+          ...action.payload.item,
           filter: "all",
           entityStatus: "idle",
         });

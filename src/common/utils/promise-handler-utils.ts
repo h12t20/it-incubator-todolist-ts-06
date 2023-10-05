@@ -5,7 +5,7 @@ import { changeTodolistEntityStatusAC } from "features/TodolistList/todolists-re
 import { BaseResponse, TaskType } from "../types/types";
 import { handleServerAppError } from "./handle-server-app-error";
 import { handleServerNetworkError } from "./handle-server-network-error";
-import { createAppAsyncThunk } from "./create-app-async-thunk";
+import { AppThunk } from "../../app/store";
 
 export type ThunkReturnType = {
   task?: TaskType;
@@ -23,10 +23,9 @@ export type PromiseHandlerType<R> = {
   taskId?: string;
   showError?: boolean;
 };
-export const promiseHandler: <R>(arg: PromiseHandlerType<R>) => any = createAppAsyncThunk(
-  "app/PromiseHandler",
-  async <R>(arg: PromiseHandlerType<R>, thunkAPI: any) => {
-    const { dispatch } = thunkAPI;
+export const promiseHandler =
+  <R>(arg: PromiseHandlerType<R>): AppThunk =>
+  async (dispatch) => {
     const { promise, rejectWithValue, payload, todolistId, taskId, showError = true } = arg;
     try {
       dispatch(setAppStatusAC({ status: "loading" }));
@@ -50,5 +49,4 @@ export const promiseHandler: <R>(arg: PromiseHandlerType<R>) => any = createAppA
       todolistId && taskId && dispatch(changeTaskEntityStatusAC({ todolistId, taskId, status: "failed" }));
       return rejectWithValue(null);
     }
-  },
-);
+  };

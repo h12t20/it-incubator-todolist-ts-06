@@ -7,30 +7,22 @@ import { clearDataAC } from "../TodolistList/todolists-reducer";
 
 export const login = createAppAsyncThunk<
   {
-    payload: {
-      value: boolean;
-    };
+    value: boolean;
   },
   LoginParamsType
 >("auth/logIn", async (loginParams: LoginParamsType, thunkAPI) => {
-  const { dispatch } = thunkAPI;
+  const { dispatch, rejectWithValue } = thunkAPI;
   return dispatch<any>(
     promiseHandler({
       promise: authAPI.login(loginParams),
       payload: { value: true },
       showError: false,
+      rejectWithValue,
     }),
   );
 });
-export const logout = createAppAsyncThunk<
-  {
-    payload: {
-      value: boolean;
-    };
-  },
-  null
->("auth/logOut", (_, thunkAPI) => {
-  const { dispatch } = thunkAPI;
+export const logout = createAppAsyncThunk<{ value: boolean }, null>("auth/logOut", (_, thunkAPI) => {
+  const { dispatch, rejectWithValue } = thunkAPI;
   return dispatch<any>(
     promiseHandler({
       promise: authAPI.logout().then((res) => {
@@ -38,23 +30,18 @@ export const logout = createAppAsyncThunk<
         return res;
       }),
       payload: { value: false },
+      rejectWithValue,
     }),
   );
 });
-export const initializeApp = createAppAsyncThunk<
-  {
-    payload: {
-      value: boolean;
-    };
-  },
-  null
->("auth/initialized", (_, thunkAPI) => {
-  const { dispatch } = thunkAPI;
+export const initializeApp = createAppAsyncThunk<{ value: boolean }, null>("auth/initialized", (_, thunkAPI) => {
+  const { dispatch, rejectWithValue } = thunkAPI;
   return dispatch<any>(
     promiseHandler({
       promise: authAPI.me().finally(() => dispatch(setIsInitializedAC({ isInitialized: true }))),
       payload: { value: true },
       showError: false,
+      rejectWithValue,
     }),
   );
 });
@@ -65,13 +52,13 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.payload.value;
+        state.isLoggedIn = action.payload.value;
       })
       .addCase(logout.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.payload.value;
+        state.isLoggedIn = action.payload.value;
       })
       .addCase(initializeApp.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.payload.value;
+        state.isLoggedIn = action.payload.value;
       });
   },
 });
