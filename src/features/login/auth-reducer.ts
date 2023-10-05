@@ -5,49 +5,57 @@ import { promiseHandler } from "common/utils/promise-handler-utils";
 import { createAppAsyncThunk } from "common/utils";
 import { clearDataAC } from "../TodolistList/todolists-reducer";
 
-export const login = createAppAsyncThunk<{ value: boolean }, LoginParamsType>(
-  "auth/logIn",
-  async (loginParams: LoginParamsType, thunkAPI) => {
-    const { dispatch, rejectWithValue } = thunkAPI;
-    return dispatch<any>(
-      promiseHandler(authAPI.login(loginParams), rejectWithValue, { value: true }, null, null, false),
-    );
+export const login = createAppAsyncThunk<
+  {
+    payload: {
+      value: boolean;
+    };
   },
-);
+  LoginParamsType
+>("auth/logIn", async (loginParams: LoginParamsType, thunkAPI) => {
+  const { dispatch } = thunkAPI;
+  return dispatch<any>(
+    promiseHandler({
+      promise: authAPI.login(loginParams),
+      payload: { value: true },
+      showError: false,
+    }),
+  );
+});
 export const logout = createAppAsyncThunk<
   {
-    value: boolean;
+    payload: {
+      value: boolean;
+    };
   },
   null
 >("auth/logOut", (_, thunkAPI) => {
-  const { dispatch, rejectWithValue } = thunkAPI;
+  const { dispatch } = thunkAPI;
   return dispatch<any>(
-    promiseHandler(
-      authAPI.logout().then((res) => {
+    promiseHandler({
+      promise: authAPI.logout().then((res) => {
         if (res.data.resultCode === 0) dispatch(clearDataAC());
         return res;
       }),
-      rejectWithValue,
-      { value: false },
-    ),
+      payload: { value: false },
+    }),
   );
 });
 export const initializeApp = createAppAsyncThunk<
   {
-    value: boolean;
+    payload: {
+      value: boolean;
+    };
   },
   null
 >("auth/initialized", (_, thunkAPI) => {
-  const { dispatch, rejectWithValue } = thunkAPI;
+  const { dispatch } = thunkAPI;
   return dispatch<any>(
-    promiseHandler(
-      authAPI.me().finally(() => dispatch(setIsInitializedAC({ isInitialized: true }))),
-      rejectWithValue,
-      { value: true },
-      null,
-      null,
-      false,
-    ),
+    promiseHandler({
+      promise: authAPI.me().finally(() => dispatch(setIsInitializedAC({ isInitialized: true }))),
+      payload: { value: true },
+      showError: false,
+    }),
   );
 });
 const slice = createSlice({
@@ -57,13 +65,13 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(login.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.value;
+        state.isLoggedIn = action.payload.payload.value;
       })
       .addCase(logout.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.value;
+        state.isLoggedIn = action.payload.payload.value;
       })
       .addCase(initializeApp.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.value;
+        state.isLoggedIn = action.payload.payload.value;
       });
   },
 });

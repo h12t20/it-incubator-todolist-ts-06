@@ -1,37 +1,37 @@
 import Button from "@mui/material/Button";
-import React from "react";
+import React, { FC } from "react";
 import { useFilter } from "./useFilter";
 import { FilterValuesType } from "common/types/types";
 
-type FilterPropsType = {
+type Props = {
   id: string;
   filter: FilterValuesType;
 };
-export const Filter = React.memo((props: FilterPropsType) => {
-  const { onAllClickHandler, onActiveClickHandler, onCompletedClickHandler } = useFilter(props.id);
+export const Filter: FC<Props> = React.memo(({ filter, id }) => {
+  const { onChangeFilter } = useFilter(id);
   return (
     <div className="button">
       <Button
         size="small"
         color="primary"
-        variant={props.filter === "all" ? "outlined" : "text"}
-        onClick={onAllClickHandler}
+        variant={filter === "all" ? "outlined" : "text"}
+        onClick={() => onChangeFilter("all")}
       >
         All
       </Button>
       <Button
         size="small"
         color="success"
-        variant={props.filter === "active" ? "outlined" : "text"}
-        onClick={onActiveClickHandler}
+        variant={filter === "active" ? "outlined" : "text"}
+        onClick={() => onChangeFilter("active")}
       >
         Active
       </Button>
       <Button
         size="small"
         color="secondary"
-        variant={props.filter === "completed" ? "outlined" : "text"}
-        onClick={onCompletedClickHandler}
+        variant={filter === "completed" ? "outlined" : "text"}
+        onClick={() => onChangeFilter("completed")}
       >
         Completed
       </Button>

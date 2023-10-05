@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { EditableSpan } from "common/components/editablespan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
@@ -6,25 +6,26 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useTask } from "./useTask";
 import { TaskStatuses } from "common/enums";
 import { TaskType } from "common/types/types";
+import s from "./Task.module.scss";
 
-export type TaskPropsType = {
+type Props = {
   task: TaskType;
   id: string;
   disabled: boolean;
   entityStatus: string;
 };
-export const Task = React.memo((props: TaskPropsType) => {
-  const { changeTaskStatus, changeTaskTitle, removeTask } = useTask(props.task.id, props.id);
-  const disabled = props.task.entityStatus === "loading";
+export const Task: FC<Props> = React.memo(({ task, id }) => {
+  const { changeTaskStatus, changeTaskTitle, removeTask } = useTask(task.id, id);
+  const disabled = task.entityStatus === "loading";
   return (
-    <div key={props.task.id} className={props.task.status === TaskStatuses.Completed ? "is-done" : ""}>
+    <div key={task.id} className={task.status === TaskStatuses.Completed ? s.isDone : ""}>
       <Checkbox
-        id={props.task.id}
+        id={task.id}
         onChange={changeTaskStatus}
-        checked={props.task.status === TaskStatuses.Completed}
+        checked={task.status === TaskStatuses.Completed}
         disabled={disabled}
       />
-      <EditableSpan onChangeTitle={changeTaskTitle} value={props.task.title} disabled={disabled} />
+      <EditableSpan onChangeTitle={changeTaskTitle} value={task.title} disabled={disabled} />
       <IconButton onClick={removeTask} disabled={disabled}>
         <DeleteIcon />
       </IconButton>

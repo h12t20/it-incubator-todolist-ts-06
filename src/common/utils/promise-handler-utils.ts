@@ -1,11 +1,11 @@
 import { AxiosResponse } from "axios";
-import { AppThunk } from "app/store";
 import { setAppStatusAC } from "../../app/app-reducer";
 import { changeTaskEntityStatusAC, ResultCode } from "features/TodolistList/tasks-reducer";
 import { changeTodolistEntityStatusAC } from "features/TodolistList/todolists-reducer";
 import { BaseResponse, TaskType } from "../types/types";
 import { handleServerAppError } from "./handle-server-app-error";
 import { handleServerNetworkError } from "./handle-server-network-error";
+import { createAppAsyncThunk } from "./create-app-async-thunk";
 
 export type ThunkReturnType = {
   task?: TaskType;
@@ -15,16 +15,19 @@ export type ThunkReturnType = {
   value?: boolean;
   isInitialized?: boolean;
 };
-export const promiseHandler =
-  <R>(
-    promise: Promise<AxiosResponse<BaseResponse<R>, BaseResponse>>,
-    rejectWithValue: any,
-    payload: ThunkReturnType | null = null,
-    todolistId: string | null = null,
-    taskId: string | null = null,
-    showError: boolean = true,
-  ): AppThunk =>
-  async (dispatch) => {
+export type PromiseHandlerType<R> = {
+  promise: Promise<AxiosResponse<BaseResponse<R>, BaseResponse>>;
+  rejectWithValue?: any;
+  payload?: ThunkReturnType | null;
+  todolistId?: string;
+  taskId?: string;
+  showError?: boolean;
+};
+export const promiseHandler: <R>(arg: PromiseHandlerType<R>) => any = createAppAsyncThunk(
+  "app/PromiseHandler",
+  async <R>(arg: PromiseHandlerType<R>, thunkAPI: any) => {
+    const { dispatch } = thunkAPI;
+    const { promise, rejectWithValue, payload, todolistId, taskId, showError = true } = arg;
     try {
       dispatch(setAppStatusAC({ status: "loading" }));
       todolistId && !taskId && dispatch(changeTodolistEntityStatusAC({ todolistId, status: "loading" }));
@@ -35,7 +38,7 @@ export const promiseHandler =
         dispatch(setAppStatusAC({ status: "succeeded" }));
         todolistId && !taskId && dispatch(changeTodolistEntityStatusAC({ todolistId, status: "succeeded" }));
         todolistId && taskId && dispatch(changeTaskEntityStatusAC({ todolistId, taskId, status: "succeeded" }));
-        if (payload) return { ...payload };
+        if (payload) return payload;
         else return { item, todolistId };
       } else {
         showError ? handleServerAppError(res.data, dispatch) : dispatch(setAppStatusAC({ status: "failed" }));
@@ -47,4 +50,5 @@ export const promiseHandler =
       todolistId && taskId && dispatch(changeTaskEntityStatusAC({ todolistId, taskId, status: "failed" }));
       return rejectWithValue(null);
     }
-  };
+  },
+);

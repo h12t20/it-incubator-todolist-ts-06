@@ -17,7 +17,7 @@ export const useAddItemForm = (addItemHandler: (newTitle: string) => void) => {
     }
   };
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.currentTarget.value);
   };
 
@@ -30,7 +30,7 @@ export const useAddItemForm = (addItemHandler: (newTitle: string) => void) => {
   return {
     title,
     onKeyPressHandler,
-    onChangeHandler,
+    onChangeTitleHandler,
     addItem,
     error,
   };

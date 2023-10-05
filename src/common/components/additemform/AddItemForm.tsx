@@ -8,7 +8,7 @@ export type AddItemProps = {
   disabled?: boolean;
 };
 export const AddItemForm = React.memo((props: AddItemProps) => {
-  const { title, onKeyPressHandler, onChangeHandler, addItem, error } = useAddItemForm(props.addItem);
+    const { title, onKeyPressHandler, onChangeTitleHandler, addItem, error } = useAddItemForm(props.addItem);
 
   return (
     <div>
@@ -17,7 +17,7 @@ export const AddItemForm = React.memo((props: AddItemProps) => {
         size="small"
         value={title}
         onKeyDown={onKeyPressHandler}
-        onChange={onChangeHandler}
+        onChange={onChangeTitleHandler}
         error={!!error}
         label="Type value"
         helperText={error}

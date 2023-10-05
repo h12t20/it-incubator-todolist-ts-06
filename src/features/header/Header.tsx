@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import LinearProgress from "@mui/material/LinearProgress";
-import s from "./Header.module.css";
+import s from "./Header.module.scss";
 import { useHeader } from "./useHeader";
 
 export const Header = React.memo(() => {

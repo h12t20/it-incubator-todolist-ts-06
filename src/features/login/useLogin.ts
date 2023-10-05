@@ -3,11 +3,9 @@ import { useFormik } from "formik";
 import { login } from "./auth-reducer";
 import { isLoggedInSelector } from "app/selectors";
 import { BaseResponse } from "../../common/types/types";
+import { LoginParamsType } from "../../common/api/auth-api";
 
-type FormikErrorType = {
-  email?: string;
-  password?: string;
-};
+type FormikErrorType = Partial<Omit<LoginParamsType, "captcha?">>;
 export const useLogin = () => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(isLoggedInSelector);

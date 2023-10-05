@@ -97,8 +97,10 @@ export const startState: TasksStateType = {
 test("correct task should be deleted from correct array", () => {
   const action = tasksThunks.removeTasks.fulfilled(
     {
-      taskId: "2",
-      todolistId: "todolistId2",
+      payload: {
+        taskId: "2",
+        todolistId: "todolistId2",
+      },
     },
     "",
     {
@@ -209,9 +211,11 @@ test("correct task should be added to correct array", () => {
 test("status of specified task should be changed", () => {
   const action = tasksThunks.updateTask.fulfilled(
     {
-      taskId: "1",
-      task: nTask,
-      todolistId: "todolistId2",
+      payload: {
+        taskId: "1",
+        task: nTask,
+        todolistId: "todolistId2",
+      },
     },
     "",
     { taskId: "1", todolistId: "todolistId2", newStatus: 0, newValue: '"juse"' },
@@ -230,9 +234,11 @@ test("status of specified task should be changed", () => {
 test("title of specified task should be changed", () => {
   const action = tasksThunks.updateTask.fulfilled(
     {
-      taskId: "1",
-      task: nTask,
-      todolistId: "todolistId2",
+      payload: {
+        taskId: "1",
+        task: nTask,
+        todolistId: "todolistId2",
+      },
     },
     "",
     { taskId: "1", todolistId: "todolistId2", newStatus: 2, newValue: '"milk"' },
@@ -253,8 +259,8 @@ test("new array should be added when new todolist is added", () => {
       order: 0,
     },
   };
-  const action = todolistThunks.createTodolist.fulfilled(newTodo, "requestId", "new todolist");
-  const endState = tasksReducer(startState, action);
+    const action = todolistThunks.createTodolist.fulfilled({ payload: newTodo }, "requestId", "new todolist");
+    const endState = tasksReducer(startState, action);
   const keys = Object.keys(endState);
   const newKey = keys.find((k) => k != "todolistId1" && k != "todolistId2");
   if (!newKey) {
