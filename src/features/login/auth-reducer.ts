@@ -1,49 +1,40 @@
 import { authAPI, LoginParamsType } from "common/api/auth-api";
-import { setIsInitializedAC } from "app/app-reducer";
 import { AnyAction, createSlice } from "@reduxjs/toolkit";
-import { promiseHandler } from "common/utils/promise-handler-utils";
 import { createAppAsyncThunk } from "common/utils";
-import { clearDataAC } from "../TodolistList/todolists-reducer";
+import { ResultCode } from "../TodolistList/tasks-reducer";
 
 export const login = createAppAsyncThunk<
   {
     value: boolean;
   },
   LoginParamsType
->("auth/logIn", (loginParams: LoginParamsType, thunkAPI) => {
-  const { dispatch, rejectWithValue } = thunkAPI;
-  return dispatch<any>(
-    promiseHandler({
-      promise: authAPI.login(loginParams),
-      payload: { value: true },
-      showError: false,
-      rejectWithValue,
-    }),
-  );
+>("auth/logIn", async (loginParams: LoginParamsType) => {
+  const res = await authAPI.login(loginParams);
+  if (res.data.resultCode === ResultCode.success) {
+    return { value: true };
+  } else throw new Error(res.data.messages[0]);
 });
-export const logout = createAppAsyncThunk<{ value: boolean }, null>("auth/logOut", (_, thunkAPI) => {
-  const { dispatch, rejectWithValue } = thunkAPI;
-  return dispatch<any>(
-    promiseHandler({
-      promise: authAPI.logout().then((res) => {
-        if (res.data.resultCode === 0) dispatch(clearDataAC());
-        return res;
-      }),
-      payload: { value: false },
-      rejectWithValue,
-    }),
-  );
+export const logout = createAppAsyncThunk<
+  {
+    value: boolean;
+  },
+  null
+>("auth/logOut", async (_) => {
+  const res = await authAPI.logout();
+  if (res.data.resultCode === ResultCode.success) {
+    return { value: false };
+  } else throw new Error(res.data.messages[0]);
 });
-export const initializeApp = createAppAsyncThunk<{ value: boolean }, null>("auth/initialized", (_, thunkAPI) => {
-  const { dispatch, rejectWithValue } = thunkAPI;
-  return dispatch<any>(
-    promiseHandler({
-      promise: authAPI.me().finally(() => dispatch(setIsInitializedAC({ isInitialized: true }))),
-      payload: { value: true },
-      showError: false,
-      rejectWithValue,
-    }),
-  );
+export const initializeApp = createAppAsyncThunk<
+  {
+    value: boolean;
+  },
+  null
+>("auth/initialized", async (_) => {
+  const res = await authAPI.me();
+  if (res.data.resultCode === ResultCode.success) {
+    return { value: true };
+  } else throw new Error(res.data.messages[0]);
 });
 const slice = createSlice({
   name: "auth",
@@ -59,4 +50,3 @@ const slice = createSlice({
   },
 });
 export const authReducer = slice.reducer;
-export const authThunks = { login, logout, initializeApp };

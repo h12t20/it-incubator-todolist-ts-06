@@ -9,7 +9,12 @@ export const todolistAPI = {
     return instance.delete<BaseResponse>(`/todo-lists/${todolistId}`);
   },
   createTodolist(title: string) {
-    return instance.post<BaseResponse<{ item: TodolistType }>>("/todo-lists", { title: title });
+    return instance.post<
+      BaseResponse<{
+        id: any;
+        item: TodolistType;
+      }>
+    >("/todo-lists", { title: title });
   },
   readTodolist() {
     return instance.get<Array<TodolistType>>("/todo-lists");

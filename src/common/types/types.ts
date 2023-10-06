@@ -10,6 +10,7 @@ export type BaseResponse<D = TaskType> = {
   messages: Array<string>;
   fieldsErrors: FieldErrorType[];
   data: {
+    message: any;
     item: D;
   };
 };

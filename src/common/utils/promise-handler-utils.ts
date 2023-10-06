@@ -1,3 +1,4 @@
+/*
 import { AxiosResponse } from "axios";
 import { setAppStatusAC } from "../../app/app-reducer";
 import { changeTaskEntityStatusAC, ResultCode } from "features/TodolistList/tasks-reducer";
@@ -53,3 +54,4 @@ export const promiseHandler =
       return rejectWithValue(null);
     }
   };
+*/

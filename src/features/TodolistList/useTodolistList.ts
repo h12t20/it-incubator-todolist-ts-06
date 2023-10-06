@@ -22,11 +22,13 @@ export const useTodolistList = () => {
     [dispatch],
   );
   const setTodolist = useCallback(() => {
-    dispatch(fetchTodolist()).then((res) =>
-      res.payload.data.map((tdl: TodolistType) => {
-        dispatch(fetchTasks(tdl.id));
-      }),
-    );
+    dispatch(fetchTodolist())
+      .then((res) =>
+        res.payload.data.map((tdl: TodolistType) => {
+          dispatch(fetchTasks(tdl.id));
+        }),
+      )
+      .catch((error) => console.log(error));
   }, [dispatch]);
   return {
     todolists,

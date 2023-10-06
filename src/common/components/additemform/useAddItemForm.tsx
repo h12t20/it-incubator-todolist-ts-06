@@ -1,5 +1,4 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
-import { BaseResponse } from "../../types/types";
 
 export const useAddItemForm = (addItemHandler: (newTitle: string) => Promise<any>) => {
   let [title, setTitle] = useState("");
@@ -10,8 +9,8 @@ export const useAddItemForm = (addItemHandler: (newTitle: string) => Promise<any
     if (newTitle !== "") {
       addItemHandler(newTitle)
         .then(() => setTitle(""))
-        .catch((error: BaseResponse) => {
-          setError(error.messages[0]);
+        .catch((error) => {
+          setError(error.message);
         });
     } else {
       setError("Title is required");
