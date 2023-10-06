@@ -16,5 +16,6 @@ export default {
 };
 
 export const AddItemFormBaseExample = () => {
+  // @ts-ignore
   return <AddItemForm addItem={action('Button "add" was pressed inside the form')} />;
 };

@@ -60,6 +60,7 @@ export const addTasks = createAppAsyncThunk<{ item: TaskType }, AddTaskArgType>(
         promise: taskAPI.createTask(arg.todolistId, arg.title),
         todolistId: arg.todolistId,
         rejectWithValue,
+        showError: false,
       }),
     );
   },

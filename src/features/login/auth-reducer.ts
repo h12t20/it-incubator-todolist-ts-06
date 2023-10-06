@@ -1,6 +1,6 @@
 import { authAPI, LoginParamsType } from "common/api/auth-api";
 import { setIsInitializedAC } from "app/app-reducer";
-import { createSlice } from "@reduxjs/toolkit";
+import { AnyAction, createSlice } from "@reduxjs/toolkit";
 import { promiseHandler } from "common/utils/promise-handler-utils";
 import { createAppAsyncThunk } from "common/utils";
 import { clearDataAC } from "../TodolistList/todolists-reducer";
@@ -50,16 +50,12 @@ const slice = createSlice({
   initialState: { isLoggedIn: false },
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(login.fulfilled, (state, action) => {
+    builder.addMatcher(
+      (action: AnyAction) => action.type.startsWith("auth") && action.type.endsWith("fulfilled"),
+      (state, action) => {
         state.isLoggedIn = action.payload.value;
-      })
-      .addCase(logout.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.value;
-      })
-      .addCase(initializeApp.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.value;
-      });
+      },
+    );
   },
 });
 export const authReducer = slice.reducer;

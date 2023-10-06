@@ -17,7 +17,7 @@ export const useTodolistList = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
   const addTodolist = useCallback(
     (title: string) => {
-      dispatch(createTodolist(title));
+      return dispatch(createTodolist(title)).unwrap();
     },
     [dispatch],
   );

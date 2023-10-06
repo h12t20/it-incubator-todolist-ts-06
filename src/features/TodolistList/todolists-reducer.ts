@@ -31,6 +31,7 @@ export const createTodolist = createAppAsyncThunk<{ item: TodolistType }, string
       }>({
         promise: todolistAPI.createTodolist(title),
         rejectWithValue,
+        showError: false,
       }),
     );
   },
@@ -39,23 +40,23 @@ export const changeTodoTitle = createAppAsyncThunk<{ todolistId: string; title: 
   "todolist/changeTodoTitle",
   ({ todolistId, title }, thunkAPI) => {
       const { dispatch, rejectWithValue } = thunkAPI;
-    return dispatch<any>(
-      promiseHandler({
-        promise: todolistAPI.updateTodolist(todolistId, title),
-        payload: {
+      return dispatch<any>(
+        promiseHandler({
+          promise: todolistAPI.updateTodolist(todolistId, title),
+          payload: {
+            todolistId,
+            title,
+          },
           todolistId,
-          title,
-        },
-        todolistId,
-        rejectWithValue,
-      }),
-    );
+          rejectWithValue,
+        }),
+      );
   },
 );
 export const deleteTodolist = createAppAsyncThunk<{ todolistId: string }, string>(
   "todolist/deleteTodoList",
   (todolistId: string, thunkAPI) => {
-      const { dispatch, rejectWithValue } = thunkAPI;
+    const { dispatch, rejectWithValue } = thunkAPI;
     return dispatch<any>(
       promiseHandler({
         promise: todolistAPI.deleteTodolist(todolistId),

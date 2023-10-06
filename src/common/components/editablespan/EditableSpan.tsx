@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField } from "@mui/material";
 import { useEditableSpan } from "./useEditableSpan";
+import s from "./EditableSpan.module.scss";
 
 type EditableSpanProps = {
   value: string;
@@ -30,7 +31,7 @@ export const EditableSpan = React.memo((props: EditableSpanProps) => {
       label="Type value"
     />
   ) : (
-    <span style={spanStyle(props.disabled)} onDoubleClick={activateEditMode}>
+    <span className={s.add3Dot} style={spanStyle(props.disabled)} onDoubleClick={activateEditMode}>
       {props.value}
     </span>
   );

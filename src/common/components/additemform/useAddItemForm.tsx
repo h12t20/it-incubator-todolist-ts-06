@@ -1,17 +1,18 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { BaseResponse } from "../../types/types";
 
-export type AddItemProps = {
-  addItem: (title: string) => void;
-};
-export const useAddItemForm = (addItemHandler: (newTitle: string) => void) => {
+export const useAddItemForm = (addItemHandler: (newTitle: string) => Promise<any>) => {
   let [title, setTitle] = useState("");
   let [error, setError] = useState<string | null>(null);
 
   const addItem = () => {
     let newTitle = title.trim();
     if (newTitle !== "") {
-      addItemHandler(newTitle);
-      setTitle("");
+      addItemHandler(newTitle)
+        .then(() => setTitle(""))
+        .catch((error: BaseResponse) => {
+          setError(error.messages[0]);
+        });
     } else {
       setError("Title is required");
     }
