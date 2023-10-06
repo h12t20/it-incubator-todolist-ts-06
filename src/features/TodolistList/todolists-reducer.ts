@@ -15,7 +15,12 @@ export const fetchTodolist = createAppAsyncThunk<any>("todolist/fetchTodolist", 
   const res = await todolistAPI.readTodolist();
   return { data: res.data };
 });
-export const createTodolist = createAppAsyncThunk<{ item: TodolistType }, string>("todolist/createTodolist", async (title) => {
+export const createTodolist = createAppAsyncThunk<
+  {
+    item: TodolistType;
+  },
+  string
+>("todolist/createTodolist", async (title) => {
   const res: AxiosResponse = await todolistAPI.createTodolist(title);
   console.log(res);
   if (res.data.resultCode === ResultCode.success) {
