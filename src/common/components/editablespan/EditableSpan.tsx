@@ -28,10 +28,13 @@ export const EditableSpan = React.memo((props: EditableSpanProps) => {
       value={title}
       autoFocus
       onBlur={activateViewMode}
+      onKeyDown={(event) => {
+        if (event.key == "Enter") activateViewMode();
+      }}
       label="Type value"
     />
   ) : (
-    <span className={s.add3Dot} style={spanStyle(props.disabled)} onDoubleClick={activateEditMode}>
+    <span className={s.add3Dot} style={spanStyle(props.disabled)} onClick={activateEditMode}>
       {props.value}
     </span>
   );
