@@ -1,19 +1,21 @@
 import { useAppDispatch, useAppSelector } from "app/hook";
 import { useFormik } from "formik";
 import { login } from "./auth-reducer";
-import { isLoggedInSelector } from "app/selectors";
+import { captchaURLSelector, isLoggedInSelector } from "app/selectors";
 import { BaseResponse } from "../../common/types/types";
 import { LoginParamsType } from "../../common/api/auth-api";
 
-type FormikErrorType = Partial<Omit<LoginParamsType, "captcha?">>;
+type FormikErrorType = Partial<LoginParamsType>;
 export const useLogin = () => {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(isLoggedInSelector);
+  const captchaURL = useAppSelector(captchaURLSelector);
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
       rememberMe: false,
+      captcha: "",
     },
     validate: (values) => {
       const errors: FormikErrorType = {};
@@ -44,5 +46,6 @@ export const useLogin = () => {
   return {
     formik,
     isLoggedIn,
+    captchaURL,
   };
 };

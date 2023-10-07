@@ -8,13 +8,16 @@ type AuthMeResponseType = {
 };
 export const authAPI = {
   login(loginParams: LoginParamsType) {
-    return instance.post<BaseResponse<{ userId?: number }>>(`/auth/login`, loginParams);
+    return instance.post<BaseResponse<{ userId?: number }>>(`auth/login`, loginParams);
   },
   logout() {
-    return instance.delete<BaseResponse>(`/auth/login`);
+    return instance.delete<BaseResponse>(`auth/login`);
   },
   me() {
-    return instance.get<BaseResponse<AuthMeResponseType>>(`/auth/me`);
+    return instance.get<BaseResponse<AuthMeResponseType>>(`auth/me`);
+  },
+  captcha() {
+    return instance.get<{ url: string }>(`security/get-captcha-url`);
   },
 };
 //types

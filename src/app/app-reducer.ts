@@ -2,7 +2,7 @@ import { AnyAction, createSlice, isFulfilled, isPending, isRejected, PayloadActi
 import { ErrorType, RequestStatusType } from "common/types/types";
 import { changeTodoTitle, fetchTodolist } from "../features/TodolistList/todolists-reducer";
 import { fetchTasks, removeTasks, updateTask } from "../features/TodolistList/tasks-reducer";
-import { initializeApp, logout } from "../features/login/auth-reducer";
+import { logout } from "../features/login/auth-reducer";
 
 const initialState = {
   status: "idle",
@@ -41,9 +41,12 @@ const slice = createSlice({
             : "Some error";
         },
       )
-      .addMatcher(isFulfilled(initializeApp), (state) => {
-        state.isInitialized = true;
-      });
+      .addMatcher(
+        (action: AnyAction) => action.type.startsWith("auth/initialized"),
+        (state) => {
+          state.isInitialized = true;
+        },
+      );
   },
 });
 export const { setAppStatusAC, setAppErrorAC } = slice.actions;

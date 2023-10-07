@@ -4,7 +4,6 @@ import { AnyAction, createSlice, isFulfilled, isPending, isRejected } from "@red
 import { createAppAsyncThunk } from "common/utils";
 import { TaskStatuses } from "common/enums";
 import { TaskType, TodolistType } from "common/types/types";
-import { AxiosResponse } from "axios";
 import { logout } from "../login/auth-reducer";
 
 export type TasksStateType = {
@@ -46,7 +45,7 @@ export const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: s
 export const addTasks = createAppAsyncThunk<{ item: TaskType }, AddTaskArgType>(
   "tasks/addTasks",
   async (arg: AddTaskArgType) => {
-    const res: AxiosResponse = await taskAPI.createTask(arg.todolistId, arg.title);
+    const res = await taskAPI.createTask(arg.todolistId, arg.title);
     if (res.data.resultCode === ResultCode.success) {
       return { item: res.data.data.item };
     } else throw new Error(res.data.messages[0]);

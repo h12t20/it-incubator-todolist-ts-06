@@ -6,7 +6,7 @@ import { isInitializedSelector } from "app/selectors";
 export const useApp = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(initializeApp(null));
+    dispatch(initializeApp());
   }, []);
   const isInitialized = useAppSelector(isInitializedSelector);
   return { isInitialized };

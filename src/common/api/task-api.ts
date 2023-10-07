@@ -16,7 +16,6 @@ export const taskAPI = {
   },
 };
 //types
-
 export type TaskResponseType = {
   items: TaskType[];
   totalCount: number;

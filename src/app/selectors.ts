@@ -9,6 +9,7 @@ export const todolistsSelector = createSelector(
   (state) => state.todolists,
 );
 export const isLoggedInSelector = (state: RootState) => state.auth.isLoggedIn;
+export const captchaURLSelector = (state: RootState) => state.auth.captchaURL;
 export const tasksSelectorCreator = (id: string) =>
   createSelector(
     () => id,

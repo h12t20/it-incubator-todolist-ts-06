@@ -11,7 +11,7 @@ import { Navigate } from "react-router-dom";
 import { useLogin } from "./useLogin";
 
 export const Login = () => {
-  const { formik, isLoggedIn } = useLogin();
+  const { formik, isLoggedIn, captchaURL } = useLogin();
   if (isLoggedIn) return <Navigate to="/" />;
   return (
     <Grid container justifyContent={"center"}>
@@ -51,6 +51,21 @@ export const Login = () => {
               {formik.errors.password && formik.touched.password && (
                 <div style={{ color: "red" }}>{formik.errors.password}</div>
               )}
+              {captchaURL && <img src={captchaURL} alt={"captcha"} />}
+              {captchaURL && (
+                <TextField
+                  autoComplete="off"
+                  type="captcha"
+                  label="Captcha"
+                  margin="normal"
+                  {...formik.getFieldProps("captcha")}
+                  onBlur={formik.handleBlur}
+                ></TextField>
+              )}
+
+              {/*{formik.errors.captcha && formik.touched.captcha && (
+                  <div style={{ color: "red" }}>{formik.errors.password}</div>
+              )*/}
               <FormControlLabel
                 label="Remember me"
                 control={<Checkbox />}

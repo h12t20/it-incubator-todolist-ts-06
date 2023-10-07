@@ -7,7 +7,7 @@ export const useHeader = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
   const status = useAppSelector(statusSelector);
   const dispatch = useAppDispatch();
-  const onLogOutHandler = useCallback(() => dispatch(logout(null)), []);
+  const onLogOutHandler = useCallback(() => dispatch(logout()), []);
   return {
     status,
     isLoggedIn,
