@@ -68,7 +68,7 @@ const slice = createSlice({
       .addCase(fetchTodolist.fulfilled, (state, action) => {
         return action.payload.data.map((tl: TodolistDomainType) => ({
           ...tl,
-          filter: "all",
+          filter: "active",
           entityStatus: "idle",
         }));
       })
