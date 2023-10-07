@@ -1,5 +1,5 @@
-import { instance } from "./instance";
-import { BaseResponse, TaskType } from "../types/types";
+import { instance } from "../../../../common/api/instance";
+import { BaseResponse, TaskType } from "../../../../common/types/types";
 
 export const taskAPI = {
   readTasks(todolistId: string) {

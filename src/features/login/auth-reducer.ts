@@ -1,8 +1,8 @@
-import { authAPI, LoginParamsType } from "common/api/auth-api";
+import { authAPI, LoginParamsType } from "features/login/auth-api";
 import { AnyAction, createSlice } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/utils";
 import { ResultCode } from "../TodolistList/tasks-reducer";
-import { securityAPI } from "../../common/api/sequrity-api";
+import { securityAPI } from "./sequrity-api";
 
 export const login = createAppAsyncThunk<{ value: boolean }, LoginParamsType>(
   "auth/logIn",

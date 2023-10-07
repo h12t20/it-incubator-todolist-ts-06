@@ -42,7 +42,7 @@ const slice = createSlice({
         },
       )
       .addMatcher(
-        (action: AnyAction) => action.type.startsWith("auth/initialized"),
+        (action: AnyAction) => action.type.startsWith("auth/initialized") && !action.type.endsWith("pending"),
         (state) => {
           state.isInitialized = true;
         },

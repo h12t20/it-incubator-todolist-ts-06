@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { createTodolist, fetchTodolist } from "./todolists-reducer";
-import { useAppDispatch, useAppSelector } from "app/hook";
-import { isLoggedInSelector, todolistsSelector } from "app/selectors";
+import { useAppDispatch, useAppSelector } from "common/hooks/hook";
+import { isLoggedInSelector, todolistsSelector } from "common/selectors/selectors";
 import { fetchTasks } from "./tasks-reducer";
 import { TodolistType } from "../../common/types/types";
 

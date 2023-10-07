@@ -25,7 +25,9 @@ export const Task: FC<Props> = React.memo(({ task, id }) => {
         checked={task.status === TaskStatuses.Completed}
         disabled={disabled}
       />
-      <EditableSpan onChangeTitle={changeTaskTitle} value={task.title} disabled={disabled} />
+      <span className={s.task}>
+        <EditableSpan onChangeTitle={changeTaskTitle} value={task.title} disabled={disabled} />
+      </span>
       <IconButton onClick={removeTask} disabled={disabled}>
         <DeleteIcon />
       </IconButton>

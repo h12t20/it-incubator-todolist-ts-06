@@ -1,9 +1,9 @@
-import { useAppDispatch, useAppSelector } from "app/hook";
+import { useAppDispatch, useAppSelector } from "common/hooks/hook";
 import { useFormik } from "formik";
 import { login } from "./auth-reducer";
-import { captchaURLSelector, isLoggedInSelector } from "app/selectors";
+import { captchaURLSelector, isLoggedInSelector } from "common/selectors/selectors";
 import { BaseResponse } from "../../common/types/types";
-import { LoginParamsType } from "../../common/api/auth-api";
+import { LoginParamsType } from "./auth-api";
 
 type FormikErrorType = Partial<LoginParamsType>;
 export const useLogin = () => {

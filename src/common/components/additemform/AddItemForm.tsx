@@ -13,6 +13,7 @@ export const AddItemForm: FC<Props> = React.memo((props) => {
   return (
     <div>
       <TextField
+        multiline={true}
         type="text"
         size="small"
         value={title}

@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { changeTodoTitle, deleteTodolist } from "../todolists-reducer";
 import { addTasks } from "../tasks-reducer";
-import { useAppDispatch, useAppSelector } from "app/hook";
-import { tasksSelectorCreator } from "app/selectors";
+import { useAppDispatch, useAppSelector } from "common/hooks/hook";
+import { tasksSelectorCreator } from "common/selectors/selectors";
 import { TaskStatuses } from "common/enums";
 import { FilterValuesType } from "common/types/types";
 

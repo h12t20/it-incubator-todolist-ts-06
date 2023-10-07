@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { changeTodoFilterAC } from "../../todolists-reducer";
-import { useAppDispatch } from "app/hook";
+import { useAppDispatch } from "common/hooks/hook";
 import { FilterValuesType } from "../../../../common/types/types";
 
 export const useFilter = (id: string) => {

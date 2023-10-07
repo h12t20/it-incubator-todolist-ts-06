@@ -1,4 +1,4 @@
-import { instance } from "./instance";
+import { instance } from "../../common/api/instance";
 
 export const securityAPI = {
   captcha() {

@@ -1,5 +1,5 @@
-import { instance } from "./instance";
-import { BaseResponse } from "../types/types";
+import { instance } from "../../common/api/instance";
+import { BaseResponse } from "../../common/types/types";
 
 type AuthMeResponseType = {
   id: number;

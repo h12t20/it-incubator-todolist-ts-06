@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from "app/hook";
+import { useAppDispatch, useAppSelector } from "common/hooks/hook";
 import { useCallback } from "react";
 import { logout } from "../login/auth-reducer";
-import { isLoggedInSelector, statusSelector } from "app/selectors";
+import { isLoggedInSelector, statusSelector } from "common/selectors/selectors";
 
 export const useHeader = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector);

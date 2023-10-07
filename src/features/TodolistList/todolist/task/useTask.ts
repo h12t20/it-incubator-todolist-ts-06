@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback } from "react";
 import { tasksThunks } from "../../tasks-reducer";
-import { useAppDispatch } from "app/hook";
+import { useAppDispatch } from "common/hooks/hook";
 import { TaskStatuses } from "common/enums";
 
 export const useTask = (taskId: string, todolistId: string) => {

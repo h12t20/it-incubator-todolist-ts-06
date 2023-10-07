@@ -1,4 +1,4 @@
-import { taskAPI } from "common/api/task-api";
+import { taskAPI } from "features/TodolistList/todolist/task/task-api";
 import { todolistThunks } from "./todolists-reducer";
 import { AnyAction, createSlice, isFulfilled, isPending, isRejected } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/utils";

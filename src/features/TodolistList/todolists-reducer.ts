@@ -1,4 +1,4 @@
-import { todolistAPI } from "common/api/todolist-api";
+import { todolistAPI } from "features/TodolistList/todolist/todolist-api";
 import { AnyAction, createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
 import { createAppAsyncThunk } from "common/utils";
 import { FilterValuesType, TodolistDomainType, TodolistType } from "common/types/types";

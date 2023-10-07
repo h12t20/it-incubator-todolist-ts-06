@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from "./hook";
+import { useAppDispatch, useAppSelector } from "../common/hooks/hook";
 import { useEffect } from "react";
 import { initializeApp } from "features/login/auth-reducer";
-import { isInitializedSelector } from "app/selectors";
+import { isInitializedSelector } from "common/selectors/selectors";
 
 export const useApp = () => {
   const dispatch = useAppDispatch();
