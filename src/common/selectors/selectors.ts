@@ -4,6 +4,7 @@ import { createSelector } from "@reduxjs/toolkit";
 export const isInitializedSelector = (state: RootState) => state.app.isInitialized;
 export const errorSelector = (state: RootState) => state.app.error;
 export const statusSelector = (state: RootState) => state.app.status;
+export const sortSelector = (state: RootState) => state.app.sortType;
 export const todolistsSelector = createSelector(
   (state: RootState) => state,
   (state) => state.todolists,

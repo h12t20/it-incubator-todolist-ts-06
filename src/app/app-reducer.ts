@@ -8,6 +8,7 @@ const initialState = {
   status: "idle",
   error: null as ErrorType,
   isInitialized: false,
+  sortType: "by Date",
 };
 const slice = createSlice({
   name: "app",
@@ -18,6 +19,9 @@ const slice = createSlice({
     },
     setAppErrorAC(state, action: PayloadAction<{ error: ErrorType }>) {
       state.error = action.payload.error;
+    },
+    setSortTypeAC(state, action: PayloadAction<{ sortType: string }>) {
+      state.sortType = action.payload.sortType;
     },
   },
   extraReducers: (builder) => {
@@ -49,5 +53,5 @@ const slice = createSlice({
       );
   },
 });
-export const { setAppStatusAC, setAppErrorAC } = slice.actions;
+export const { setAppStatusAC, setAppErrorAC, setSortTypeAC } = slice.actions;
 export const appReducer = slice.reducer;

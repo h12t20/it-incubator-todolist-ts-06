@@ -9,7 +9,7 @@ import { Navigate } from "react-router-dom";
 import s from "./TodolistList.module.scss";
 
 export const TodolistList = React.memo(() => {
-  const { todolists, addTodolist, isLoggedIn } = useTodolistList();
+  const { todo, addTodolist, isLoggedIn } = useTodolistList();
   if (!isLoggedIn) {
     return <Navigate to="/login" />;
   }
@@ -19,8 +19,8 @@ export const TodolistList = React.memo(() => {
         <Grid container>
           <AddItemForm addItem={addTodolist} />
         </Grid>
-        <Grid container spacing={3} style={{ padding: "20px" }}>
-          {todolists.map((tl) => {
+        <Grid container spacing={3} style={{ padding: "20px", height: "85vh" }}>
+          {todo.map((tl) => {
             return (
               <Grid key={tl.id} item>
                 <Paper key={tl.id} style={{ padding: "10px" }}>

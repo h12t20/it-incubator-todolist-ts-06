@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { createTodolist, fetchTodolist } from "./todolists-reducer";
 import { useAppDispatch, useAppSelector } from "common/hooks/hook";
-import { isLoggedInSelector, todolistsSelector } from "common/selectors/selectors";
+import { isLoggedInSelector, sortSelector, todolistsSelector } from "common/selectors/selectors";
 import { fetchTasks } from "./tasks-reducer";
 import { TodolistType } from "../../common/types/types";
 
@@ -14,7 +14,9 @@ export const useTodolistList = () => {
   }, []);
   const dispatch = useAppDispatch();
   const todolists = useAppSelector(todolistsSelector);
+  const sortType = useAppSelector(sortSelector);
   const isLoggedIn = useAppSelector(isLoggedInSelector);
+  const todo = sortType === "by ABC" ? [...todolists].sort((a, b) => (a.title < b.title ? -1 : 1)) : todolists;
   const addTodolist = useCallback(
     (title: string) => {
       return dispatch(createTodolist(title)).unwrap();
@@ -31,8 +33,8 @@ export const useTodolistList = () => {
       .catch((error) => console.log(error));
   }, [dispatch]);
   return {
-    todolists,
     addTodolist,
     isLoggedIn,
+    todo,
   };
 };

@@ -7,9 +7,10 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Login } from "features/login/Login";
 import { CircularProgress } from "@mui/material";
 import { useApp } from "./useApp";
+import { Sidebar } from "../features/Sidebar/Sidebar";
 
 export const App = () => {
-  const { isInitialized } = useApp();
+  const { isInitialized, open, mouseMoveHandler, handleOpenSwitch } = useApp();
   if (!isInitialized) {
     return (
       <div className={s.CircularProgress}>
@@ -18,10 +19,11 @@ export const App = () => {
     );
   }
   return (
-    <div className={s.App}>
+    <div className={s.App} onMouseMove={mouseMoveHandler}>
+      <Sidebar open={open} handleClose={handleOpenSwitch} />
       <ErrorSnackbar />
       <div className={s.AppBar}>
-        <Header />
+        <Header handleOpen={handleOpenSwitch} />
       </div>
       <div className={s.Body}>
         <BrowserRouter>
