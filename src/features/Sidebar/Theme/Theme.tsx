@@ -1,9 +1,9 @@
 import React, { ChangeEvent } from "react";
 import s from "../Sidebar.module.css";
-import { useAppDispatch } from "../../../common/hooks/hook";
-import { setThemeAC } from "../../../app/app-reducer";
+import { useAppDispatch } from "common/hooks/hook";
+import { setThemeAC } from "app/app-reducer";
 import { useSelector } from "react-redux";
-import { themeSelector } from "../../../common/selectors/selectors";
+import { themeSelector } from "common/selectors/selectors";
 
 export const Theme = () => {
   const dispatch = useAppDispatch();

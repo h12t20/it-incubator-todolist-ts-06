@@ -3,6 +3,8 @@ import { ErrorType, RequestStatusType } from "common/types/types";
 import { changeTodoTitle, fetchTodolist } from "../features/TodolistList/todolists-reducer";
 import { fetchTasks, removeTasks, updateTask } from "../features/TodolistList/tasks-reducer";
 import { logout } from "../features/login/auth-reducer";
+import { createAppAsyncThunk } from "../common/utils";
+import { loadSetting, Setting } from "../common/localStorage/localStorage";
 
 const initialState = {
   status: "idle",
@@ -11,6 +13,12 @@ const initialState = {
   sortType: "by Date",
   theme: "Light",
 };
+export const getSetting = createAppAsyncThunk<Setting>("app/setting", async () => {
+  const res = loadSetting();
+  if (res) {
+    return res;
+  } else throw new Error("Local storage error");
+});
 const slice = createSlice({
   name: "app",
   initialState: initialState,
@@ -30,6 +38,13 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getSetting.fulfilled, (state, action) => {
+        return {
+          ...state,
+          theme: action.payload.theme,
+          sortType: action.payload.sort,
+        };
+      })
       .addMatcher(isPending, (state) => {
         state.status = "loading";
       })

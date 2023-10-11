@@ -10,6 +10,7 @@ import { useApp } from "./useApp";
 import { Sidebar } from "../features/Sidebar/Sidebar";
 
 export const App = () => {
+  document.title = "Todolist";
   const { isInitialized, theme, open, mouseMoveHandler, handleOpenSwitch } = useApp();
   if (!isInitialized) {
     return (

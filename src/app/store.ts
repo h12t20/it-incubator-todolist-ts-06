@@ -11,7 +11,6 @@ export const store = configureStore({
     app: appReducer,
     auth: authReducer,
   },
-  devTools: true,
 });
 //types
 export type AppDispatch = typeof store.dispatch;
