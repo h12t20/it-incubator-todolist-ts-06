@@ -9,6 +9,7 @@ const initialState = {
   error: null as ErrorType,
   isInitialized: false,
   sortType: "by Date",
+  theme: "Light",
 };
 const slice = createSlice({
   name: "app",
@@ -22,6 +23,9 @@ const slice = createSlice({
     },
     setSortTypeAC(state, action: PayloadAction<{ sortType: string }>) {
       state.sortType = action.payload.sortType;
+    },
+    setThemeAC(state, action: PayloadAction<{ theme: string }>) {
+      state.theme = action.payload.theme;
     },
   },
   extraReducers: (builder) => {
@@ -53,5 +57,5 @@ const slice = createSlice({
       );
   },
 });
-export const { setAppStatusAC, setAppErrorAC, setSortTypeAC } = slice.actions;
+export const { setAppStatusAC, setAppErrorAC, setSortTypeAC, setThemeAC } = slice.actions;
 export const appReducer = slice.reducer;

@@ -10,7 +10,7 @@ import { useApp } from "./useApp";
 import { Sidebar } from "../features/Sidebar/Sidebar";
 
 export const App = () => {
-  const { isInitialized, open, mouseMoveHandler, handleOpenSwitch } = useApp();
+  const { isInitialized, theme, open, mouseMoveHandler, handleOpenSwitch } = useApp();
   if (!isInitialized) {
     return (
       <div className={s.CircularProgress}>
@@ -19,11 +19,15 @@ export const App = () => {
     );
   }
   return (
-    <div className={s.App} onMouseMove={mouseMoveHandler}>
-      <Sidebar open={open} handleClose={handleOpenSwitch} />
+    <div
+      className={s.App}
+      style={theme === "Dark" ? { backgroundColor: "rgb(36, 53, 66)", color: "white" } : {}}
+      onMouseMove={mouseMoveHandler}
+    >
+      <Sidebar open={open} theme={theme} handleClose={handleOpenSwitch} />
       <ErrorSnackbar />
       <div className={s.AppBar}>
-        <Header handleOpen={handleOpenSwitch} />
+        <Header theme={theme} handleOpen={handleOpenSwitch} />
       </div>
       <div className={s.Body}>
         <BrowserRouter>

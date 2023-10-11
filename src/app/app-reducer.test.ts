@@ -8,6 +8,7 @@ test("setErrorTest", () => {
         error: null,
         isInitialized: true,
         sortType: "by Date",
+        theme: "Light",
       },
       {
         type: "APP/SET-ERROR",
@@ -19,6 +20,7 @@ test("setErrorTest", () => {
     error: "some error",
     isInitialized: true,
     sortType: "by Date",
+    theme: "Light",
   });
 });
 test("setStatusTest", () => {
@@ -29,6 +31,7 @@ test("setStatusTest", () => {
         error: null,
         isInitialized: true,
         sortType: "by Date",
+        theme: "Light",
       },
       {
         type: "APP/SET-STATUS",
@@ -40,5 +43,6 @@ test("setStatusTest", () => {
     error: null,
     isInitialized: true,
     sortType: "by Date",
+    theme: "Light",
   });
 });

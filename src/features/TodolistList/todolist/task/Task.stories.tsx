@@ -25,6 +25,7 @@ export const TaskBaseExample = () => {
           priority: TaskPriorities.Middle,
           todoListId: "todolistId1",
         }}
+        theme={"Light"}
         id={"todolostId1"}
         entityStatus="idle"
         disabled={false}
@@ -42,6 +43,7 @@ export const TaskBaseExample = () => {
           priority: TaskPriorities.Middle,
           todoListId: "todolistId1",
         }}
+        theme={"Light"}
         id={"todolostId2"}
         entityStatus="idle"
         disabled={false}

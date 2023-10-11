@@ -1,7 +1,8 @@
 import { useAppDispatch, useAppSelector } from "../common/hooks/hook";
 import React, { useEffect, useState } from "react";
 import { initializeApp } from "features/login/auth-reducer";
-import { isInitializedSelector } from "common/selectors/selectors";
+import { isInitializedSelector, themeSelector } from "common/selectors/selectors";
+import { useSelector } from "react-redux";
 
 export const useApp = () => {
   const dispatch = useAppDispatch();
@@ -14,11 +15,12 @@ export const useApp = () => {
     !open && (document.body.style.overflow = "unset");
   }, [open]); // отключает прокрутку при открытом меню
   const isInitialized = useAppSelector(isInitializedSelector);
+  const theme = useSelector(themeSelector);
   const handleOpenSwitch = () => (open ? setOpen(false) : setOpen(true));
   const mouseMoveHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.pageX < 40 && e.pageY > 70 && !open) {
       handleOpenSwitch();
     }
   };
-  return { isInitialized, open, mouseMoveHandler, handleOpenSwitch };
+  return { isInitialized, open, theme, mouseMoveHandler, handleOpenSwitch };
 };

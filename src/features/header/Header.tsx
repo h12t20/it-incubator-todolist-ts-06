@@ -10,21 +10,26 @@ import LinearProgress from "@mui/material/LinearProgress";
 import s from "./Header.module.scss";
 import { useHeader } from "./useHeader";
 
-export const Header: FC<{ handleOpen: () => void }> = React.memo(({ handleOpen }) => {
+export const Header: FC<{ handleOpen: () => void; theme: string }> = React.memo(({ handleOpen, theme }) => {
   const { status, isLoggedIn, onLogOutHandler } = useHeader();
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <div>
-          <Toolbar style={{ height: "6vh" }}>
+          <Toolbar style={theme === "Dark" ? { height: "6vh", backgroundColor: "rgb(33, 33, 33)" } : { height: "6vh" }}>
             <IconButton onClick={handleOpen} size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+              style={theme === "Dark" ? { color: "orange" } : {}}
+            >
               Todolist
             </Typography>
             {isLoggedIn && (
-              <Button color="inherit" onClick={onLogOutHandler}>
+              <Button color="inherit" onClick={onLogOutHandler} style={theme === "Dark" ? { color: "orange" } : {}}>
                 Logout
               </Button>
             )}

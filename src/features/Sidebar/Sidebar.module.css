@@ -58,12 +58,24 @@
     cursor: pointer;
 }
 
-.item:hover {
-    width: 100%;
+.lightTheme {
+
+}
+
+.lightTheme:hover {
     filter: opacity(130%);
     color: white;
     background-color: #1976d2;
+}
 
+.darkTheme {
+
+}
+
+.darkTheme:hover {
+    filter: opacity(130%);
+    color: orange;
+    background-color: rgb(33, 33, 33);
 }
 
 .nav a.active {

@@ -1,20 +1,20 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, FC } from "react";
 import s from "../Sidebar.module.css";
 import { useAppDispatch } from "../../../common/hooks/hook";
 import { setSortTypeAC } from "../../../app/app-reducer";
 import { useSelector } from "react-redux";
 import { sortSelector } from "../../../common/selectors/selectors";
 
-export const Sort = () => {
+export const Sort: FC<{ theme: string }> = ({ theme }) => {
   const dispatch = useAppDispatch();
   const sortType = useSelector(sortSelector);
   const sortChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSortTypeAC({ sortType: e.currentTarget.value }));
   };
   return (
-    <div className={s.sort}>
-      <fieldset>
-        <legend>Select type:</legend>
+    <div className={s.sort} style={theme === "Dark" ? { color: "orange", backgroundColor: "rgb(33,33,33)" } : {}}>
+      <fieldset style={theme === "Dark" ? { borderColor: "orange" } : {}}>
+        <legend>Select:</legend>
         <div>
           <input
             type="radio"
