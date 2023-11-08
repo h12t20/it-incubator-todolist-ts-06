@@ -19,7 +19,6 @@ export const Sidebar: FC<PropsType> = ({ open, theme, handleClose }) => {
       <aside className={sidebarClass} style={theme === "Dark" ? { backgroundColor: "rgb(51, 74, 92)" } : {}}>
         <nav id={"sidebar-menu"} className={s.nav} onMouseLeave={handleClose}>
           <MenuItem children={<Theme />} label={"Theme"} theme={theme} />
-          <MenuItem children={<Sort theme={theme} />} label={"Search"} theme={theme} />
           <MenuItem children={<Sort theme={theme} />} label={"Sort"} theme={theme} />
         </nav>
       </aside>
