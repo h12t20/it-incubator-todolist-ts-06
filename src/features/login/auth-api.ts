@@ -8,7 +8,15 @@ type AuthMeResponseType = {
 };
 export const authAPI = {
   login(loginParams: LoginParamsType) {
-    return instance.post<BaseResponse<{ userId?: number }>>(`auth/login`, loginParams);
+    return instance.post<
+      BaseResponse<{
+        userId?: number;
+      }>
+    >(`auth/login`, loginParams, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   },
   logout() {
     return instance.delete<BaseResponse>(`auth/login`);
